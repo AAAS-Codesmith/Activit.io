@@ -9,6 +9,7 @@ function App() {
         document.getElementById('test').innerText = data;
       })
     console.log('Pressed!')
+    console.log('Test from steve')
   }
 
   return (
