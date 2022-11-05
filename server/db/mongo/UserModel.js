@@ -1,26 +1,22 @@
-// Import mongoose
 import mongoose from 'mongoose';
 
 // Define schema
 const Schema = mongoose.Schema;
 
 // Define Team Model
-const TeamModel = new Schema({
-  team_id: { type: Number, required: true },
-  team_size: { type: Number, required: true },
-  posts: [ {
-    post_id: { type: Number, required: true },
-    user: { type: String, required: true },
-    content: { type: String, required: true },
-  } ],
-  activities: [ {
-    activity: { type: String, required: true },
-    activity_type: { type: String, required: true },
-  } ]
-})
+const UserModel = new Schema({
+  // Will plan to generate a 10 digit alphanumeric string for user_id
+  // ~25 million possible combinations
+  user_id: { type: String, required: true },
+  user_name: { type: String, required: true },
+  // Will plan to generate a 10 digit alphanumeric string for the team_id
+  // ~25 million possible combinations
+  // Will reference Team Model from User Model via team_id
+  team_ids: [ String ],
+});
 
 // Compile model from schema
-const Team = mongoose.model('Team', TeamModel);
+const User = mongoose.model('User', UserModel);
 
 // Export model
-export default Team;
+export default User;
