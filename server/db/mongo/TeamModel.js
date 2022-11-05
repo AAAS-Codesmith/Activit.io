@@ -8,17 +8,15 @@ const Schema = mongoose.Schema;
 const TeamModel = new Schema({
   // Will reference Team Model from User Model via team_id
   team_id: { type: String, required: true },
+  team_name: { type: String, required: true },
   team_members: [ { type: String, required: true } ],
-  posts: [ {
-    post_id: { type: Number, required: true },
-    user: { type: String, required: true },
-    content: { type: String, required: true },
-  } ],
-  activities: [ {
-    activity: { type: String, required: true },
-    activity_type: { type: String, required: true },
-  } ]
-})
+  posts: {
+    post_id: [ { type: String, required: true } ],
+  },
+  activities: {
+    activity: [ { type: String, required: true } ],
+  }
+});
 
 // Compile model from schema
 const Team = mongoose.model('Team', TeamModel);
