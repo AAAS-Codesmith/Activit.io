@@ -21,18 +21,20 @@ function TotalTeamDisplay() {
 
   // Set initial state
   const [totalTeams, setUpdateTeams] = React.useState(dummyTeamsArr)
-
+  
+  function fetchActivity(newActivity) {
+    setUpdateTeams(newActivity);
+  }
 
   // Parse through to create team card displays
   const teamCardDisplay = totalTeams.map(team => {
-    console.log('update teams fn', setUpdateTeams)
     return (
       <TeamCard
         key={team.team_id}
         teamName={team.teamName}
         teamMembers={team.teamMembers}
         teamActivities={team.teamActivities}
-        setUpdateTeams={() =>setUpdateTeams}
+        fetchActivity={fetchActivity}
       />
     )
   }

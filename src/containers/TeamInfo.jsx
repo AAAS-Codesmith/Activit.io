@@ -27,11 +27,11 @@ function TeamInfo(props) {
   // UseEffect Testing
   useEffect(() => {
     // Double checking current state and updated states
-    if (JSON.stringify(location.state) !== JSON.stringify(teamInfo)){
+    if (JSON.stringify(location.state) !== JSON.stringify(teamInfo)) {
       console.log('Old team info', teamInfo);
       console.log('New linked data', location.state);
       // Updating if different with new linked data
-      setUpdateTeam({...location.state});
+      setUpdateTeam({ ...location.state });
     }
   })
 
@@ -51,12 +51,20 @@ function TeamInfo(props) {
       <h2>Activities</h2>
       {activities}
       <button
-        onClick={() => setUpdateTeam(
-          {
-            ...teamInfo,
-            teamActivities: [...teamInfo.teamActivities, 'new activity temp']
-          }
-        )}>
+        onClick={() => {
+          console.log('Updating activities')
+          // Goals
+          // Create fetch POST adding activity to current Team DB
+          // Updates state in TotalTeamDisplay
+          // New updating teamActivities propagates down back here
+          setUpdateTeam(
+            {
+              ...teamInfo,
+              teamActivities: [...teamInfo.teamActivities, 'new activity']
+            }
+          )
+        }
+        }>
         Add Activity
       </button>
     </div>
