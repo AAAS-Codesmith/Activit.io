@@ -10,14 +10,23 @@
       -Alex:Alex Resync DB to state with hooks
 */
 import React from 'react'
-import { Link } from 'react-router-dom';
-import { ProgressPlugin } from 'webpack';
 
+// const teamMembers = props.teamMembers.map(name => {
+//   <li>{name}</li>
+// })
+
+// const activities = props.activities.map(activity => {
+//   <li>{activity}</li>
+// })
 
 function TeamInfo(props) {
   return (
     <div className='team-info'>
-      <h1>Team Info</h1>
+      {/* <h1>{props.teamName}</h1> */}
+      <h2>Team Members</h2>
+      {/* {teamMembers} */}
+      <h2>Activities</h2>
+      {/* {activities} */}
     </div>
   )
 }
