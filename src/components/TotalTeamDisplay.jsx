@@ -2,6 +2,8 @@ import React from 'react'
 import TeamCard from './TeamCard.jsx';
 import { Link } from 'react-router-dom';
 
+import Test from './test.jsx';
+
 function TotalTeamDisplay() {
   // Alex:Backend Replace with Fetch GET from DB
   const dummyTeamsArr = [
@@ -21,20 +23,32 @@ function TotalTeamDisplay() {
 
   // Set initial state
   const [totalTeams, setUpdateTeams] = React.useState(dummyTeamsArr)
-  
-  function fetchActivity(newActivity) {
-    setUpdateTeams(newActivity);
+
+  const updateTeams = (data) => {
+    console.log('test button')
+    setUpdateTeams(data);
+    // setUpdateTeams([{
+    //   team_id: 0,
+    //   teamName: 'TESSSST',
+    //   teamMembers: ['ahh', 'ahh', 'ahh', 'ahh'],
+    //   teamActivities: ['Testing initial team'],
+    // }])
+  }
+
+  function test() {
+    console.log('hi')
   }
 
   // Parse through to create team card displays
   const teamCardDisplay = totalTeams.map(team => {
+    console.log(updateTeams)
     return (
       <TeamCard
         key={team.team_id}
         teamName={team.teamName}
         teamMembers={team.teamMembers}
         teamActivities={team.teamActivities}
-        fetchActivity={fetchActivity}
+        // teamFunction={updateTeams}
       />
     )
   }
@@ -51,9 +65,13 @@ function TotalTeamDisplay() {
       <div className='teams-scroll-container'>
         <div className='teams-scroll'>
           {teamCardDisplay}
+          <button onClick={updateTeams}>
+            WTFFFFF
+          </button>
+          <Test func={updateTeams}/>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

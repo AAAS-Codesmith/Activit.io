@@ -16,7 +16,6 @@ import { useLocation } from 'react-router-dom';
 function TeamInfo(props) {
   // Storing location information sent from Link 
   const location = useLocation();
-
   // Initialize state, dummy default data
   const [teamInfo, setUpdateTeam] = React.useState({
     teamName: 'Dummy Data',
@@ -31,7 +30,7 @@ function TeamInfo(props) {
       console.log('Old team info', teamInfo);
       console.log('New linked data', location.state);
       // Updating if different with new linked data
-      setUpdateTeam({ ...location.state });
+      setUpdateTeam({ ...location.state});
     }
   })
 
