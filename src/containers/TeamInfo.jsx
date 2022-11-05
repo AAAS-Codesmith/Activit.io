@@ -9,7 +9,7 @@
       -Adds activity to our DB into our specific team's activities
       -Alex:Alex Resync DB to state with hooks
 */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function TeamInfo() {
   // Initialize state, dummy data temp
@@ -19,12 +19,18 @@ function TeamInfo() {
     teamActivities: ['Creating a scratch project'],
   });
 
+  // UseEffect Testing
+  useEffect(() => {
+    console.log('TeamInfo updated!')
+    console.log(teamInfo)
+  })
+
   // Populate team members + activities
   const teamMembers = teamInfo.teamMembers.map(ele =>
-    <li>{ele}</li>
+    <li key={ele}>{ele}</li>
   )
   const activities = teamInfo.teamActivities.map(activity =>
-    <li>{activity}</li>
+    <li key={activity}>{activity}</li>
   )
 
   return (
