@@ -11,9 +11,10 @@
 */
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { ProgressPlugin } from 'webpack';
 
 
-function TeamInfo() {
+function TeamInfo(props) {
   return (
     <div className='team-info'>
       <h1>Team Info</h1>
