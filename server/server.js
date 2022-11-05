@@ -16,7 +16,7 @@ app.use(cors());
 
 app.use('/api/activity', boredRouter)
 
-
+app.use('/db', dbRouter);
 // Unknown route handler
 app.use('*', (req, res) => res.sendStatus(404));
 
