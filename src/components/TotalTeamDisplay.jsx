@@ -3,7 +3,7 @@ import TeamCard from './TeamCard.jsx';
 import { Link } from 'react-router-dom';
 
 function TotalTeamDisplay() {
-  // Alex:Backend - populate with teams from DB 
+  // Alex:Backend Replace with Fetch GET from DB
   const dummyTeamsArr = [
     {
       team_id: 0,
@@ -19,14 +19,23 @@ function TotalTeamDisplay() {
     }
   ];
 
+  // Set initial state
+  const [totalTeams, setUpdateTeams] = React.useState(dummyTeamsArr)
+
+
   // Parse through to create team card displays
-  const teamCardDisplay = dummyTeamsArr.map(team =>
-    <TeamCard
-      key={team.team_id}
-      teamName={team.teamName}
-      teamMembers={team.teamMembers}
-      teamActivities={team.teamActivities}
+  const teamCardDisplay = totalTeams.map(team => {
+    console.log('update teams fn', setUpdateTeams)
+    return (
+      <TeamCard
+        key={team.team_id}
+        teamName={team.teamName}
+        teamMembers={team.teamMembers}
+        teamActivities={team.teamActivities}
+        setUpdateTeams={() =>setUpdateTeams}
       />
+    )
+  }
   );
 
   return (
