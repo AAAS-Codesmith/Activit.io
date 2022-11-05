@@ -7,6 +7,7 @@ const User = require('./db/mongo/UserModel.js');
 const Team = require('./db/mongo/TeamModel.js');
 const cors = require('cors');
 const boredRouter = require('./routers/boredRouter.js')
+const dbRouter = require('./routers/dbRouter.js');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
