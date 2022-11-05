@@ -23,18 +23,41 @@ body {
   color: white
 }
 
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-column{
+  display: flex;
+  flex-direction: column;
+}
+
+.align-self-end {
+  align-self: end;
+}
+
+.home {
+  gap: 16px;
+  width: 60%;
+}
+
 .button {
   background-color: gold;
   padding: 6px;
   border: 5px solid transparent;
   border-radius: 5px;
+  margin: 3px;
+  min-width: 120px;
+  min-height: 55px;
 }
+
+
+
 .card-button:hover, .button:hover{
   background-color: var(--rose-fuschia);
-  border: 5px solid;
-  border-image: var(--rainbow-gradient-image) 30 30 round;
-  border-image-slice: 1;
-  border-radius: 1px;
+  box-shadow: 0 0 4px 4px rgb(250, 84, 175);
   transition: 0.7s;
 }
 
@@ -59,29 +82,15 @@ body {
   color:rgb(219, 219, 219)
 }
 
-.flex-center {
-  justify-content: center;
-  align-items: center;
-}
-
-.flex-column{
-  display: flex;
-  flex-direction: column;
-}
-
-.home {
-  gap: 16px;
-}
-
 .form{
   margin: 6px;
 }
 
 .form div {
-  margin: 12px;
+  margin: 12px 0px 12px 0px;
 }
-.form div input {
-  width: 100%;
+.form-input-box {
+  width: 95%;
   min-height: 24px;
   border: 1px solid gray;
   border-radius: 12px;
@@ -90,7 +99,7 @@ body {
   color: rgb(219, 219, 219)
 }
 
-.form div input:focus {
+.form-input-box:focus {
   outline: none;
   border: 1px solid var(--rose-fuschia);
   box-shadow: 0 0 10px var(--rose-fuschia);
@@ -104,6 +113,7 @@ body {
 
 .container-card {
   background-color: var(--navy-purple);
+  width: 70%;
   padding: 16px;
   border: 5px solid;
   border-image: var(--rainbow-gradient-image);
@@ -112,8 +122,9 @@ body {
   margin: 24px;
   box-shadow: 8px 8px 4px 3px rgb(75, 47, 75);
   animation: 0.75s ease-out 0s 0.75 appear;
-
 }
+
+
 
 @keyframes appear {
   0% {
@@ -122,4 +133,9 @@ body {
   100% {
     opacity: 1;
   }
+}
+
+@media screen and (max-width: 800px) {
+  .home {width: 90% }
+  .container-card {width: 80%}
 }
