@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createRoot } from 'react-dom/client';
+import App from './App.jsx';
+import { BrowserRouter } from 'react-router-dom'
+
 import './styles.css';
 
-import App from './App.jsx';
+
+// Deal with this later
+import { createRoot } from 'react-dom/client';
 // New way to render at root. Alex:Self - Look into this
 // const container = document.getElementbyId('root');
 // const root = createRoot(container);
@@ -13,7 +17,7 @@ import App from './App.jsx';
 
 // Depracated version
 ReactDOM.render(
-  <App />
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
   , document.getElementById('root'));
-
-  console.log('testing from Alex!');
