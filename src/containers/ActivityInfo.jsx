@@ -17,7 +17,7 @@ const ActivityInfo = () => {
     console.log('Deleting activity');
   }
 
-  const friendsArr = dummyDBData.team_members.map(name => <li>{name}</li>);
+  const friendsArr = dummyDBData.team_members.map(name => <li key={'temp' + name}>{name}</li>);
   return (
     <div className='flex-column flex-center activity-info'>
       <h1>Name of Activity depending on info passed down</h1>

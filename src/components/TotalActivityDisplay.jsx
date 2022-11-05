@@ -9,7 +9,7 @@ function TotalActivityDisplay() {
   const activitesArr = [];
   // Test data
   activitesArr.push(
-    <ActivityCard />
+    <ActivityCard key="temp"/>
   )
   return (
     <div className='total-activity-display flex-column flex-center'>
