@@ -12,7 +12,7 @@ function TotalActivityDisplay() {
     <ActivityCard />
   )
   return (
-    <div className='total-activity-display flex-column flex-center'>
+    <div className='total-activity-display flex-column flex-center container-card'>
       <h1>Total Activity Display</h1>
       {activitesArr}
     </div>

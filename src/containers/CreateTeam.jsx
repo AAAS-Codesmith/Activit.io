@@ -9,7 +9,7 @@ const createTeam = () => {
 
 function CreateTeam() {
   return (
-    <div className='create-team flex-column flex-center'>
+    <div className='create-team flex-column flex-center container-card'>
       <h1>Create Team</h1>
       <form className='form' onSubmit={(e) => {
         e.preventDefault();

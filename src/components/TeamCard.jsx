@@ -5,7 +5,7 @@ const TeamCard = () => {
   return (
     <div>
       <Link to='/teamInfo'>
-        <button onClick={
+        <button className='button' onClick={
           () => {
             console.log('Going to team info');
           }}>

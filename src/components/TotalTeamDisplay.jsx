@@ -16,7 +16,7 @@ function TotalTeamDisplay() {
     <TeamCard />
   )
   return (
-    <div className='total-team-display'>
+    <div className='total-team-display flex-column flex-center container-card'>
       <h1>Total Team Display</h1>
       <Link to='/createTeam'>
         <button className='button'>

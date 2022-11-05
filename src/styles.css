@@ -1,9 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Cabin&family=Quicksand&display=swap');
-
 * {
-  background-color: gray;
-  color: white;
   font-family: 'Quicksand', sans-serif;
+}
+
+body {
+  background-color: white;
+  color: black;
+  font-family: 'Quicksand', sans-serif;
+  margin: 0 auto;
 }
 
 #test {
@@ -11,7 +15,10 @@
 }
 
 .button {
-  background-color: green;
+  background-color: gold;
+  padding: 6px;
+  border: rgb(1, 43, 1);
+  border-radius: 12px;
 }
 .button:hover{
   background-color: blue;
@@ -21,14 +28,13 @@
 .home-button {
   position: sticky;
   top: 0;
-  background-color: green;
+  background-color: gold;
   min-height: 100px;
   min-width: 150px;
   font-size: 20px;
   width: 100%;
-  border: solid green;
-  border-radius: 10px;
-  align-self: stretch;
+  border-radius: 0px;
+  flex: 1;
 }
 
 .flex-center {
@@ -41,8 +47,12 @@
   flex-direction: column;
 }
 
+.home {
+  gap: 16px;
+}
+
 .form{
-  gap: 6px;
+  margin: 6px;
 }
 
 .main-app {
@@ -57,4 +67,13 @@
 
 .activity-info {
 
+}
+
+.container-card {
+  background-color: cornsilk;
+  padding: 16px;
+  border: solid rgb(125, 163, 199);
+  border-radius: 12px;
+  gap: 6px;
+  box-shadow: 6px 6px 2px 3px rgb(207, 207, 207);
 }

@@ -5,7 +5,7 @@ const ActivityCard = () => {
   return (
     <div>
       <Link to='/activities' >
-        <button onClick={() => {
+        <button className='button' onClick={() => {
           console.log('Move to activity')
         }}>
           ACTIVITY
