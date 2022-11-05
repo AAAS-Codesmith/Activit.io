@@ -36,8 +36,8 @@ function CreateTeam() {
           <label for='member'>Member 4</label>
           <input type='text'></input>
         </div>
-        <Link to='/'><button>Cancel</button></Link>
-        <input type='submit' value='Create'></input>
+        <Link to='/'><button className='button'>Cancel</button></Link>
+        <input className='button' type='submit' value='Create'></input>
       </form>
     </div>
   )

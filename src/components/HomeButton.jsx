@@ -13,7 +13,6 @@ function HomeButton() {
           Home
         </button>
       </Link>
-
     </div>
   )
 }

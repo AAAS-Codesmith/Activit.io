@@ -29,7 +29,7 @@ body {
   border: 5px solid transparent;
   border-radius: 5px;
 }
-.button:hover{
+.card-button:hover, .button:hover{
   background-color: var(--rose-fuschia);
   border: 5px solid;
   border-image: var(--rainbow-gradient-image) 30 30 round;
@@ -48,6 +48,15 @@ body {
   width: 100%;
   border-radius: 0px;
   flex: 1;
+}
+
+.card-button {
+  overflow-wrap: break-word;
+  width: 100%;
+  border: 5px solid transparent;
+  margin: 2px 0px 2px 0px;
+  background-color: #331C34;
+  color:rgb(219, 219, 219)
 }
 
 .flex-center {
@@ -81,6 +90,11 @@ body {
   color: rgb(219, 219, 219)
 }
 
+.form div input:focus {
+  outline: none;
+  border: 1px solid var(--rose-fuschia);
+  box-shadow: 0 0 10px var(--rose-fuschia);
+}
 
 .main-app {
   display: flex;

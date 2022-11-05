@@ -19,7 +19,7 @@ const ActivityInfo = () => {
 
   const friendsArr = dummyDBData.team_members.map(name => <li key={'temp' + name}>{name}</li>);
   return (
-    <div className='flex-column flex-center activity-info'>
+    <div className='flex-column flex-center activity-info container-card'>
       <h1>Name of Activity depending on info passed down</h1>
       <div>
         <h2>Activity: {dummyDBData.team_activity}</h2>

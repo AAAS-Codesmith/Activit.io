@@ -44,7 +44,7 @@ function TeamInfo(props) {
   )
 
   return (
-    <div className='team-info'>
+    <div className='team-info container-card'>
       <h1>{teamInfo.teamName}</h1>
       <h2>Team Members</h2>
       {teamMembers}
