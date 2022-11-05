@@ -1,10 +1,14 @@
-const mongoose = require('mongoose');
 const dbController = {};
 const Team = require('../db/mongo/TeamModel.js');
 const User = require('../db/mongo/UserModel.js');
+const mongoose = require('mongoose');
+const db = require('../db/db.js');
+const bcrypt = require('bcrypt');
+const path = require('path');
+require('dotenv').config({path: path.resolve(__dirname, '../../process.env')});
+const saltRounds = process.env.SALT_ROUNDS || 10;
 
 // Access DB and return requested information
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // GET Controllers ////////////////////////////////////////////////////////////
@@ -64,26 +68,75 @@ dbController.getTeamInfo = (req, res, next) => {
   });
 };
 
+
 ///////////////////////////////////////////////////////////////////////////////
 // POST Controllers ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+// Verify user
+dbController.verifyUser = async (req, res, next) => {
+  // Log to let us know we're in the controller
+  console.log('%c dbController.verifyUser called ', 'color: #00ff00');
+
+  // Pull out the username and password from the request body
+  const { username, password } = req.body;
+
+  // Find the user in the database
+  User.findOne({username}, (err, user) => {
+    // Error handling
+    if (err) {
+      return next({
+        log: `Error in dbController.verifyUser: ${err}`,
+        message: { err: 'Error occurred in dbController.verifyUser. Check server logs for more details.' },
+      });
+    }
+    // Log to let us know the user was found
+    console.log(`%c User found in database: ${user} `, 'color: #00ff00');
+
+    // Check if the password matches the one in the database
+    bcrypt.compare(password, user.password, (err, result) => {
+      // Error handling
+      if (err) {
+        return next({
+          log: `Error in dbController.verifyUser: ${err}`,
+          message: { err: 'Error occurred in dbController.verifyUser. Check server logs for more details.' },
+        });
+      }
+      // Log to let us know the password was verified
+      console.log(`%c Password verified `, 'color: #00ff00');
+
+      // Save the user info to res.locals
+      res.locals.user_info = user;
+
+      // Move to the next middleware
+      return next();
+    });
+  });
+};
+
 // Create a new User
-dbController.createUser = (req, res, next) => {
+dbController.createUser = async (req, res, next) => {
   // Log to let us know we're in the controller
   console.log('%c dbController.createUser called ', 'color: #00ff00');
 
   // Pull out the user info from the request body
   const { username, password } = req.body;
+  console.log("Received username: " + username + " and password: " + password);
+
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  console.log(hashedPassword);
+  console.log(typeof hashedPassword);
 
   // Generate a random userID for the new user
   const randomAlphanumeric = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
   // Create a new user object
+  console.log('creating user');
   User.create({
     user_id: randomAlphanumeric,
     username,
-    password,
+    password: hashedPassword,
     teams: {} 
   })
     .then((user) => {
@@ -95,6 +148,7 @@ dbController.createUser = (req, res, next) => {
     .catch((err) => {
       // Error handling
       console.error('Error saving user to database');
+      console.error(err);
       return next({
         log: 'ERROR in createUser MW',
         status: 400,
@@ -172,4 +226,5 @@ dbController.updateUser = (req, res, next) => {
     })
 };
 
-  module.exports = dbController;
+
+module.exports = dbController;

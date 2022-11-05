@@ -22,6 +22,11 @@ router.get('/teaminfo/:team_id', dbController.getTeamInfo, (req, res) => {
 // POST routes ////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+// Route to verify user on login
+router.post('/login', dbController.verifyUser, (req, res) => {
+  return res.status(200).json(res.locals.user_info);
+});
+
 // Route to add a new user to the database
 router.post('/user', dbController.createUser, (req, res) => {
   return res.status(200).json(res.locals.user_info);
