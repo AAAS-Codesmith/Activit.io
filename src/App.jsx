@@ -23,7 +23,7 @@ function App() {
   }
 
   return (
-    <div className='main-app'>
+    <div className='main-app flex-column flex-center'>
       <HomeButton />
       <Routes>
         {/* <Route path='/' element={<LoginPage />} /> */}

@@ -4,7 +4,7 @@ import TotalActivityDisplay from '../components/TotalActivityDisplay.jsx';
 
 function Home() {
   return (
-    <div className='flex-column flex-center home'>
+    <div className='flex-column flex-center home '>
       <h1>Home</h1>
       <TotalTeamDisplay />
       <TotalActivityDisplay />
