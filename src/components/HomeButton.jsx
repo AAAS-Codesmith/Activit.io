@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function HomeButton() {
 
   return (
-    <div>
+    <div className='home-button'>
       <Link to='/' className='home-button-link'>
         <button className='home-button button'
           onClick={() => {
