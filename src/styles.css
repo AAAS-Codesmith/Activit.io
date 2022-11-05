@@ -1,9 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Cabin&family=Quicksand&display=swap');
 
+:root {
+  --rainbow-gradient-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+  --cr-yellow: #FFED85;
+  --rose-fuschia: #BF4371;
+  --navy-purple: #524D94;
+}
+
 * {
-  background-color: gray;
-  color: white;
   font-family: 'Quicksand', sans-serif;
+}
+
+body {
+  background-color: rgb(40, 18, 51);
+  color: rgb(224, 224, 224);
+  font-family: 'Quicksand', sans-serif;
+  margin: 0 auto;
+  animation: 1s ease-out 0s 1 appear;
 }
 
 #test {
@@ -11,24 +24,30 @@
 }
 
 .button {
-  background-color: green;
+  background-color: gold;
+  padding: 6px;
+  border: 5px solid transparent;
+  border-radius: 12px;
 }
 .button:hover{
-  background-color: blue;
+  background-color: var(--rose-fuschia);
+  border: 5px solid;
+  border-image: var(--rainbow-gradient-image) 30 30 round;
+  border-image-slice: 1;
+  border-radius: 12px;
   transition: 0.7s;
 }
 
 .home-button {
   position: sticky;
   top: 0;
-  background-color: green;
+  background-color: gold;
   min-height: 100px;
   min-width: 150px;
   font-size: 20px;
   width: 100%;
-  border: solid green;
-  border-radius: 10px;
-  align-self: stretch;
+  border-radius: 0px;
+  flex: 1;
 }
 
 .flex-center {
@@ -41,9 +60,27 @@
   flex-direction: column;
 }
 
-.form{
-  gap: 6px;
+.home {
+  gap: 16px;
 }
+
+.form{
+  margin: 6px;
+}
+
+.form div {
+  margin: 12px;
+}
+.form div input {
+  width: 100%;
+  min-height: 24px;
+  border: 1px solid gray;
+  border-radius: 12px;
+  padding: 6px;
+  background-color: rgb(51, 51, 51);
+  color: rgb(219, 219, 219)
+}
+
 
 .main-app {
   display: flex;
@@ -51,10 +88,24 @@
 
 }
 
-.total-activity-display {
+.container-card {
+  background-color: var(--navy-purple);
+  padding: 16px;
+  border: 5px solid;
+  border-image: var(--rainbow-gradient-image);
+  border-image-slice: 1;
+  border-radius: 12px;
+  margin: 24px;
+  box-shadow: 6px 6px 2px 3px rgb(75, 47, 75);
+  animation: 0.75s ease-out 0s 0.75 appear;
 
 }
 
-.activity-info {
-
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
