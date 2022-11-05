@@ -1,5 +1,6 @@
 import React from 'react'
 import TeamCard from './TeamCard.jsx';
+import { Link } from 'react-router-dom';
 
 function TotalTeamDisplay() {
   // Populate with teams from DB we're on
@@ -15,10 +16,15 @@ function TotalTeamDisplay() {
     <TeamCard />
   )
   return (
-    <div>
+    <div className='total-team-display'>
       <h1>Total Team Display</h1>
-      <div className='TeamsScrollContainer'>
-        <div className='TeamsScroll'>
+      <Link to='/createTeam'>
+        <button className='button'>
+          Create Team
+        </button>
+      </Link>
+      <div className='teams-scroll-container'>
+        <div className='teams-scroll'>
           {/* <TeamCard team_id={team_id}> */}
           {/* Test case below delete whenever */}
           {teamsArr}
@@ -28,4 +34,4 @@ function TotalTeamDisplay() {
   )
 }
 
-export default TotalTeamDisplay
+export default TotalTeamDisplay;

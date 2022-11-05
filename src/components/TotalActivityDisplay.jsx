@@ -2,14 +2,17 @@ import React from 'react'
 import ActivityCard from './ActivityCard.jsx';
 
 function TotalActivityDisplay() {
-  // Map from DB later with all activites subscribed to
+  // Alex:DB - Expecting array of activites that have been registered
+  // Alex:Self - Will need identifying data so I can drill the right 
+  // Team name, members, and activity info into the Card Activity when clicked
+  // to display on the ActivityCard component
   const activitesArr = [];
   // Test data
   activitesArr.push(
     <ActivityCard />
   )
   return (
-    <div>
+    <div className='total-activity-display flex-column flex-center'>
       <h1>Total Activity Display</h1>
       {activitesArr}
     </div>
