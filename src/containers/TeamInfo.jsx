@@ -9,24 +9,40 @@
       -Adds activity to our DB into our specific team's activities
       -Alex:Alex Resync DB to state with hooks
 */
-import React from 'react'
+import React, { useState } from 'react';
 
-// const teamMembers = props.teamMembers.map(name => {
-//   <li>{name}</li>
-// })
+function TeamInfo() {
+  // Initialize state, dummy data temp
+  const [teamInfo, updateTeam] = React.useState({
+    teamName: 'Testing - AAAS',
+    teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
+    teamActivities: ['Creating a scratch project'],
+  });
 
-// const activities = props.activities.map(activity => {
-//   <li>{activity}</li>
-// })
+  // Populate team members + activities
+  const teamMembers = teamInfo.teamMembers.map(ele =>
+    <li>{ele}</li>
+  )
+  const activities = teamInfo.teamActivities.map(activity =>
+    <li>{activity}</li>
+  )
 
-function TeamInfo(props) {
   return (
     <div className='team-info'>
-      {/* <h1>{props.teamName}</h1> */}
+      <h1>{teamInfo.teamName}</h1>
       <h2>Team Members</h2>
-      {/* {teamMembers} */}
+      {teamMembers}
       <h2>Activities</h2>
-      {/* {activities} */}
+      {activities}
+      <button
+        onClick={() => updateTeam(
+          {
+            ...teamInfo,
+            teamActivities: [...teamInfo.teamActivities, 'new activity temp']
+          }
+        )}>
+        Add Activity
+      </button>
     </div>
   )
 }
