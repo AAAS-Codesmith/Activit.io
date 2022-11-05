@@ -27,14 +27,14 @@ body {
   background-color: gold;
   padding: 6px;
   border: 5px solid transparent;
-  border-radius: 12px;
+  border-radius: 5px;
 }
 .button:hover{
   background-color: var(--rose-fuschia);
   border: 5px solid;
   border-image: var(--rainbow-gradient-image) 30 30 round;
   border-image-slice: 1;
-  border-radius: 12px;
+  border-radius: 1px;
   transition: 0.7s;
 }
 
@@ -94,9 +94,9 @@ body {
   border: 5px solid;
   border-image: var(--rainbow-gradient-image);
   border-image-slice: 1;
-  border-radius: 12px;
+  border-radius: 2px;
   margin: 24px;
-  box-shadow: 6px 6px 2px 3px rgb(75, 47, 75);
+  box-shadow: 8px 8px 4px 3px rgb(75, 47, 75);
   animation: 0.75s ease-out 0s 0.75 appear;
 
 }
