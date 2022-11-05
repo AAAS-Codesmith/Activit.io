@@ -4,17 +4,30 @@ import { Link } from 'react-router-dom';
 
 function TotalTeamDisplay() {
   // Populate with teams from DB we're on
-  const teamsArr = [];
-  // For the current user, get an array of objects where each object has:
-  /* {
-      team_id,
-      teamName,
-      teamMembers,
-     } */
-  // Eventually will be mapped from DB
-  teamsArr.push(
-    <TeamCard />
-  )
+  // Teams will have the following info we will need to drill down
+  /*
+  team_id,
+  teamName,
+  teamMembers: [],
+  activities: []
+  */
+  const dummyTeamsArr = [
+    {
+      team_id: 0,
+      teamName: 'AAAS',
+      teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
+      activities: ['Setting up Team Card display'],
+    }
+  ];
+  // Parse through to create team card displays
+  const teamCardDisplay = dummyTeamsArr.map(team =>
+    <TeamCard
+      key={team.team_id}
+      teamName={team.teamName}
+      teamMembers={team.teamMembers}
+      activities={team.activities}
+      />
+  );
   return (
     <div className='total-team-display'>
       <h1>Total Team Display</h1>
@@ -25,9 +38,8 @@ function TotalTeamDisplay() {
       </Link>
       <div className='teams-scroll-container'>
         <div className='teams-scroll'>
-          {/* <TeamCard team_id={team_id}> */}
           {/* Test case below delete whenever */}
-          {teamsArr}
+          {teamCardDisplay}
         </div>
       </div>
     </div>
