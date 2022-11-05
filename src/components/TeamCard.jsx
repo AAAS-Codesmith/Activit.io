@@ -14,7 +14,7 @@ const TeamCard = (props) => {
         to='/teamInfo'
         state={props}
       >
-        <button onClick={(e) => {
+        <button className='card-button button-hover' onClick={(e) => {
           console.log('Going to ', props.teamName, ' info');
         }}>
           <p>Team: {props.teamName}</p>

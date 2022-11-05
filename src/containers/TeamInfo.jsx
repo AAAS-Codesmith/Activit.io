@@ -43,13 +43,14 @@ function TeamInfo(props) {
   )
 
   return (
-    <div className='team-info'>
+    <div className='team-info container-card flex-column flex-center'>
       <h1>{teamInfo.teamName}</h1>
       <h2>Team Members</h2>
       {teamMembers}
       <h2>Activities</h2>
       {activities}
       <button
+        className='button align-self-end'
         onClick={() => {
           console.log('Updating activities')
           // Goals
