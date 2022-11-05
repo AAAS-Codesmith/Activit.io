@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 // Define schema
 const Schema = mongoose.Schema;
@@ -13,13 +13,11 @@ const UserModel = new Schema({
   // Will plan to generate a 10 digit alphanumeric string for the team_id
   // ~25 million possible combinations
   // Will reference Team Model from User Model via team_id
-  teams: {
-    team_id: { type: Array, required: true },
-  }
+  teams: {type: Object, required: true},
 });
 
 // Compile model from schema
 const User = mongoose.model('User', UserModel);
 
 // Export model
-export default User;
+module.exports = User;

@@ -84,7 +84,7 @@ dbController.createUser = (req, res, next) => {
     user_id: randomAlphanumeric,
     username,
     password,
-    teams: {}, 
+    teams: {} 
   })
     .then((user) => {
       // Log to let us know the user was saved
@@ -118,7 +118,7 @@ dbController.createTeam = (req, res, next) => {
   Team.create({
     team_id: randomAlphanumeric,
     team_name,
-    members,
+    team_members: [members],
     posts: {},
     activities: {}
   })
@@ -146,18 +146,20 @@ dbController.updateUser = (req, res, next) => {
   console.log('%c dbController.updateUser called ', 'color: #00ff00');
 
   // Pull out the team_id and name from res.locals.team_info
-  const { team_id } = res.locals.team_info;
+  console.log(res.locals.team_info.team_id);
+  const team_id = res.locals.team_info.team_id;
   const { team_name } = res.locals.team_info;
 
   // Pull out the user_id from the request body
-  const { user_id } = req.locals.user_id;
+  const { user_id } = req.body.user_id;
 
   // Find the user in the DB and insert the team_id into the teams object
-  User.findOneAndUpdate(user_id, {team_id:team_name})
+  User.findOneAndUpdate(user_id, { $set: { [`teams.${team_id}`]: team_name } })
     .then((user) => {
       // Log to let us know the user was updated
       console.log(`%c User updated in database with return of : ${user}`, 'color: #00ff00');
       res.locals.user_info = user;
+      return next();
     })
     .catch((err) => {
       // Error handling
