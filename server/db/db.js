@@ -2,10 +2,14 @@
 
 // Import mongoose
 const mongoose = require('mongoose');
+require('dotenv').config({path: path.resolve(__dirname, '../../process.env')});
 
+// Import the database URI from the .env file
+const mongoDB = process.env.MONGO_URI;
+
+console.log('mongoDB: ', mongoDB);
 
 // Set up mongoose connection
-const mongoDB = "mongodb+srv://grey:codesmith@cluster0.j3rhfed.mongodb.net/?retryWrites=true&w=majority"
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Get the default connection

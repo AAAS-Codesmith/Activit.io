@@ -64,15 +64,6 @@ dbController.getTeamInfo = (req, res, next) => {
   });
 };
 
-
-
-///////////////////////////////////////////////////////////////////////////////
-// PUT Controllers ////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-
 ///////////////////////////////////////////////////////////////////////////////
 // POST Controllers ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -89,26 +80,28 @@ dbController.createUser = (req, res, next) => {
   const randomAlphanumeric = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
   // Create a new user object
-  const newUser = new User({
+  User.create({
+    user_id: randomAlphanumeric,
     username,
     password,
-    user_id: randomAlphanumeric,
-    teams: {},
-  });
-
-  // Save the new user to the database
-  newUser.save((err, user) => {
-    // Error handling
-    if (err) {
+    teams: {}, 
+  })
+    .then((user) => {
+      // Log to let us know the user was saved
+      console.log('%c User saved to database ', 'color: #00ff00');
+      // Move to the next middleware
+      return next();
+    })
+    .catch((err) => {
+      // Error handling
       console.error('Error saving user to database');
-      return next(err);
-    }
-    // Log to let us know the user was saved
-    console.log('%c User saved to database ', 'color: #00ff00');
-    // Move to the next middleware
-    return next();
-  });
-}
+      return next({
+        log: 'ERROR in createUser MW',
+        status: 400,
+        message: 'Error Occurred'
+      });
+    });
+};
 
 // Create a new team
 dbController.createTeam = (req, res, next) => {
@@ -122,24 +115,59 @@ dbController.createTeam = (req, res, next) => {
   const randomAlphanumeric = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
   // Create a new team object
-  const newTeam = new Team({
+  Team.create({
     team_id: randomAlphanumeric,
     team_name,
     members,
     posts: {},
     activities: {}
-  });
+  })
+    .then((team) => {
+      // Log to let us know the team was saved
+      console.log('%c Team saved to database ', 'color: #00ff00');
+      res.locals.team_info = team;
+      // Move to the next middleware
+      return next();
+    })
+    .catch((err) => {
+      // Error handling
+      console.error(err);
+      return next({
+        log: 'ERROR in createTeam MW',
+        status: 400,
+        message: 'Error Occurred'
+      });
+    })
+};
 
-  // Save the new team to the database
-  newTeam.save((err, team) => {
-    // Error handling
-    if (err) {
-      console.log('Error saving team to database');
-      return next(err);
-    }
-    // Log to let us know the team was saved
-    console.log('%c Team saved to database ', 'color: #00ff00');
-    // Move to the next middleware
-    return next();
-  });
-}
+// Update a user's information
+dbController.updateUser = (req, res, next) => {
+  // Log to let us know we're in the controller
+  console.log('%c dbController.updateUser called ', 'color: #00ff00');
+
+  // Pull out the team_id and name from res.locals.team_info
+  const { team_id } = res.locals.team_info;
+  const { team_name } = res.locals.team_info;
+
+  // Pull out the user_id from the request body
+  const { user_id } = req.locals.user_id;
+
+  // Find the user in the DB and insert the team_id into the teams object
+  User.findOneAndUpdate(user_id, {team_id:team_name})
+    .then((user) => {
+      // Log to let us know the user was updated
+      console.log(`%c User updated in database with return of : ${user}`, 'color: #00ff00');
+      res.locals.user_info = user;
+    })
+    .catch((err) => {
+      // Error handling
+      console.error(err);
+      return next({
+        log: 'ERROR in updateUser MW',
+        status: 400,
+        message: 'Error Occurred'
+      })
+    })
+};
+
+  module.exports = dbController;
