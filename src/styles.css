@@ -31,7 +31,7 @@
   align-self: stretch;
 }
 
-.home {
+.flex-center {
   justify-content: center;
   align-items: center;
 }
@@ -41,9 +41,20 @@
   flex-direction: column;
 }
 
+.form{
+  gap: 6px;
+}
 
 .main-app {
   display: flex;
   flex-direction: column;
+
+}
+
+.total-activity-display {
+
+}
+
+.activity-info {
 
 }
