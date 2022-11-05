@@ -1,5 +1,5 @@
 // Import mongoose
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 // Define schema
 const Schema = mongoose.Schema;
@@ -22,4 +22,4 @@ const TeamModel = new Schema({
 const Team = mongoose.model('Team', TeamModel);
 
 // Export model
-export default Team;
+module.exports = Team;
