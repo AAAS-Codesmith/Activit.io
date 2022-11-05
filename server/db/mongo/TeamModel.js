@@ -9,12 +9,12 @@ const TeamModel = new Schema({
   // Will reference Team Model from User Model via team_id
   team_id: { type: String, required: true },
   team_name: { type: String, required: true },
-  team_members: [ { type: String, required: true } ],
+  team_members: { type: Array, required: true },
   posts: {
-    post_id: [ { type: String, required: true } ],
+    post_id: { type: Array, required: true },
   },
   activities: {
-    activity: [ { type: String, required: true } ],
+    activity: { type: Array, required: true },
   }
 });
 

@@ -14,7 +14,7 @@ const UserModel = new Schema({
   // ~25 million possible combinations
   // Will reference Team Model from User Model via team_id
   teams: {
-    team_id: [ { type: String, required: true } ],
+    team_id: { type: Array, required: true },
   }
 });
 
