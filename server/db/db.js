@@ -1,17 +1,15 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Imports
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Import mongoose 
+// Will solely be used to set up the database connection
+
+// Import mongoose
 const mongoose = require('mongoose');
-// Import Team Model
-const Team = require('./mongo/TeamModel.js');
+require('dotenv').config({path: path.resolve(__dirname, '../../process.env')});
 
+// Import the database URI from the .env file
+const mongoDB = process.env.MONGO_URI;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// MongoDB Section
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+console.log('mongoDB: ', mongoDB);
+
 // Set up mongoose connection
-const mongoDB = "mongodb+srv://grey:codesmith@cluster0.j3rhfed.mongodb.net/?retryWrites=true&w=majority"
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Get the default connection
