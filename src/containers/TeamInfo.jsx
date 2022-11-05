@@ -1,28 +1,38 @@
 /*
   TeamInfo Page goals: 
-    -See Team info (TeamID, Team Members, List of activities)
-    -Display all activities from DB as components
-      -Alex:Alex set up state of page from info on the DB call
-      -Info is drilled in from specific team id reference in component above (TotalTeamDisplay)
-    -Create 'Add Activity' button
-      -Fetches from API for an activity based on group size (other info/preferences can be stretch)
-      -Adds activity to our DB into our specific team's activities
-      -Alex:Alex Resync DB to state with hooks
+    [x]See Team info (TeamID, Team Members, List of activities)
+    [x]Display all activities from DB as components
+      [x]Alex:Alex set up state of page from info on the DB call
+      [x]Info is drilled in from specific team id reference in component above (TotalTeamDisplay)
+    []Create 'Add Activity' button
+      []Fetches from API for an activity based on group size (other info/preferences can be stretch)
+      []Adds activity to our DB into our specific team's activities
+      []Alex:Alex Resync DB to state with hooks
 */
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-function TeamInfo() {
-  // Initialize state, dummy data temp
-  const [teamInfo, updateTeam] = React.useState({
-    teamName: 'Testing - AAAS',
-    teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
-    teamActivities: ['Creating a scratch project'],
+
+function TeamInfo(props) {
+  // Storing location information sent from Link 
+  const location = useLocation();
+
+  // Initialize state, dummy default data
+  const [teamInfo, setUpdateTeam] = React.useState({
+    teamName: 'Dummy Data',
+    teamMembers: ['User1', 'User2', 'User3', 'User4'],
+    teamActivities: ['Dummy Event'],
   });
 
   // UseEffect Testing
   useEffect(() => {
-    console.log('TeamInfo updated!')
-    console.log(teamInfo)
+    // Double checking current state and updated states
+    if (JSON.stringify(location.state) !== JSON.stringify(teamInfo)){
+      console.log('Old team info', teamInfo);
+      console.log('New linked data', location.state);
+      // Updating if different with new linked data
+      setUpdateTeam({...location.state});
+    }
   })
 
   // Populate team members + activities
@@ -41,7 +51,7 @@ function TeamInfo() {
       <h2>Activities</h2>
       {activities}
       <button
-        onClick={() => updateTeam(
+        onClick={() => setUpdateTeam(
           {
             ...teamInfo,
             teamActivities: [...teamInfo.teamActivities, 'new activity temp']
