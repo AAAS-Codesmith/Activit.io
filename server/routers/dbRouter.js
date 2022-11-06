@@ -37,4 +37,5 @@ router.post('/team', dbController.createTeam, dbController.updateUser, (req, res
   return res.status(200).json(res.locals.team_info);
 });
 
+
 module.exports = router;
