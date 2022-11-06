@@ -11,30 +11,16 @@ import ActivityInfo from './containers/ActivityInfo.jsx';
 
 function App() {
 
-  const handleClick = () => {
-    fetch('/api')
-      .then(res => res.json())
-      .then(data => {
-        const fetchTestDiv = document.createElement('div');
-        fetchTestDiv.innerText = data;
-        document.getElementById('root').appendChild(fetchTestDiv);
-      })
-    console.log('Pressed!');
-  }
-
   return (
     <div className='main-app flex-column flex-center'>
       <HomeButton />
       <Routes>
-        {/* <Route path='/' element={<LoginPage />} /> */}
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<LoginPage />} />
+        <Route path='/home' element={<Home />} />
         <Route path='/createTeam' element={<CreateTeam />} />
         <Route path='/teamInfo' element={<TeamInfo />} />
         <Route path='/activities' element={<ActivityInfo />} />
       </Routes>
-      <a>
-        <button className='button' onClick={handleClick}>Fetch test button!</button>
-      </a>
     </div>
   )
 }

@@ -26,13 +26,13 @@ function TotalTeamDisplay() {
 
   const updateTeams = (data) => {
     console.log('test button')
-    setUpdateTeams(data);
-    // setUpdateTeams([{
-    //   team_id: 0,
-    //   teamName: 'TESSSST',
-    //   teamMembers: ['ahh', 'ahh', 'ahh', 'ahh'],
-    //   teamActivities: ['Testing initial team'],
-    // }])
+    // setUpdateTeams(data);
+    setUpdateTeams([{
+        team_id: 0,
+      teamName: 'TESSSST',
+      teamMembers: ['ahh', 'ahh', 'ahh', 'ahh'],
+      teamActivities: ['Testing initial team'],
+    }])
   }
 
   function test() {
