@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import NewMemberEntry from '../components/NewMemberEntry.jsx';
+import CreateMemberButtons from '../components/CreateMemberButtons.jsx';
 
 function CreateTeam() {
   const [teamName, setTeamName] = React.useState('');
@@ -8,8 +10,31 @@ function CreateTeam() {
   const [memberThree, setMemberThree] = React.useState('');
   const [memberFour, setMemberFour] = React.useState('');
 
+  // State to track how many teammates you have
+  const [memberLength, setMemberLength] = React.useState(1);
+  const [memberEntries, setMemberEntries] = React.useState([]);
+  // Stretch: Add a remove member feature to remove last additional
+  // Will only appear if more than 1 member
+  // Will disappear if only 1 member available. Can't delete yourself.
+
+  //////////////////////////////////
+  //// Modifying Member Entries ////
+  //////////////////////////////////
+  // No HTTP request here. Just state changes for member input rendering purposes.
+  const addMember = () => {
+    console.log('adding Member');
+    setMemberEntries([...memberEntries].concat(<NewMemberEntry memberNum={memberLength + 1} />));
+  }
+
+  const deleteMember = () => {
+    const memberClone = [...memberEntries];
+    console.log('deleting member:', memberClone.pop());
+    setMemberEntries(memberClone);
+  }
+
   const createTeam = (formData) => {
     // Alex:Ahsan - Double check what info you need to put into DB
+    // Form needs to be modified to take in data from submit
     console.log('Team ID + Members deposited into DB')
     console.log(`
       Team Name: ${teamName}
@@ -27,6 +52,7 @@ function CreateTeam() {
       <form className='form flex-column' onSubmit={(e) => {
         e.preventDefault();
         console.log('Team Creation Submitted!')
+        console.log(e)
         createTeam(e.target.value);
       }}>
         <div>
@@ -40,49 +66,31 @@ function CreateTeam() {
           >
           </input>
         </div>
-        <div>
+        {/* Default current user entry. Immutable. */}
+        <div id='members-container'>
           <label for='member'>Member 1</label>
           <input
             required
+            readonly
+            unselectable="on"
             id='member1'
             className="form-input-box"
             type='text'
-            onChange={() => setMemberOne(document.querySelector('#member1').value)}
+            value='Readonly Static - Current User'
           >
+          </input>
+        </div>
+        {/* Populated via state array */}
+        {memberEntries}
+        {/* Can be refactored for more efficient variables */}
+        <CreateMemberButtons 
+          memberLength={memberLength}
+          memberEntries={memberEntries}
+          setMemberLength={setMemberLength}
+          addMember={addMember}
+          deleteMember={deleteMember}
+        />
 
-          </input>
-        </div>
-        <div>
-          <label for='member'>Member 2</label>
-          <input
-            id='member2'
-            className="form-input-box"
-            type='text'
-            onChange={() => setMemberTwo(document.querySelector('#member2').value)}
-          >
-
-          </input>
-        </div>
-        <div>
-          <label for='member'>Member 3</label>
-          <input
-            id='member3'
-            className="form-input-box"
-            type='text'
-            onChange={() => setMemberThree(document.querySelector('#member3').value)}
-          >
-          </input>
-        </div>
-        <div>
-          <label for='member'>Member 4</label>
-          <input
-            id='member4'
-            className="form-input-box"
-            type='text'
-            onChange={() => setMemberFour(document.querySelector('#member4').value)}
-          >
-          </input>
-        </div>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Link to='/home'><button className='button'>Cancel</button></Link>
           <input
@@ -92,6 +100,8 @@ function CreateTeam() {
           >
           </input>
         </div>
+
+
       </form>
     </div>
   )
