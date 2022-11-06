@@ -5,10 +5,10 @@ const RegisterButtons = (props) => {
   return (
     <div>
       <Link to='/'>
-        <button onClick={props.handleClick}>Cancel</button>
+        <button onClick={props.swapLogin}>Cancel</button>
       </Link>
       <Link>
-        <button>Sign Up</button>
+        <button onClick={props.registerAccount}>Sign Up</button>
       </Link>
     </div>
   )

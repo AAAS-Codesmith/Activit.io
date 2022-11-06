@@ -1,11 +1,12 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 function HomeButton() {
-
-  return (
+  const location = useLocation();
+  if (location.pathname === '/') return null;
+  else return (
     <div className='home-button'>
-      <Link to='/' className='home-button-link'>
+      <Link to='/home' className='home-button-link'>
         <button className='home-button button'
           onClick={() => {
             console.log('Clicking home button')

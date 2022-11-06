@@ -2,8 +2,6 @@ import React from 'react'
 import TeamCard from './TeamCard.jsx';
 import { Link } from 'react-router-dom';
 
-import Test from './test.jsx';
-
 function TotalTeamDisplay() {
   // Alex:Backend Replace with Fetch GET from DB
   const dummyTeamsArr = [
@@ -41,7 +39,7 @@ function TotalTeamDisplay() {
 
   // Parse through to create team card displays
   const teamCardDisplay = totalTeams.map(team => {
-    console.log(updateTeams)
+    // console.log(updateTeams)
     return (
       <TeamCard
         key={team.team_id}
@@ -68,7 +66,6 @@ function TotalTeamDisplay() {
           <button onClick={updateTeams}>
             WTFFFFF
           </button>
-          <Test func={updateTeams}/>
         </div>
       </div>
     </div >
