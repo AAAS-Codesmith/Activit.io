@@ -5,22 +5,25 @@ import LogIn from '../components/LogIn.jsx';
 import Register from '../components/Register.jsx';
 
 const LoginPage = () => {
+  // Boolean flag for conditional rendering
   const [accountCreation, setAccountCreation] = React.useState(false);
+  // Access current user/pw state here. Updates w/useState so dont need to query
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   ////////////////////////////////
   ////// Handler Functions //////
   ////////////////////////////////
-  // Swap Register/Login flag
-  function registerPage() {    
+  // Swap Register/Login flag for conditional rendering
+  function registerPage() {
     clearFields();
     setAccountCreation(!accountCreation);
   }
-  // Login
+  // Login Attempts
   function loginAccount() {
     console.log('Login attempted!\n' + 'Username:', username, '\nPassword:', password);
     clearFields();
+    // Alex: Backend
     // Check auth for login using <username> and <password>
     // Return boolean for conditional redirect in LoginButtons
     // true = login succesful, false = alert!
@@ -48,18 +51,16 @@ const LoginPage = () => {
 
   const landingButtons = !accountCreation
     ? <LoginButtons
-      swapRegister={registerPage} 
-      loginAccount={loginAccount} 
-      clearFields={clearFields} />
+      swapRegister={registerPage}
+      loginAccount={loginAccount} />
     : <RegisterButtons
       swapLogin={registerPage}
-      registerAccount={registerAccount} 
-      clearFields={clearFields} />
+      registerAccount={registerAccount} />
 
-  
+
   return (
     <div>
-      <h1>Welcome!</h1>
+      <h1>Wonderpuss Says Hello!</h1>
       {greeting}
       <form>
         <p>
