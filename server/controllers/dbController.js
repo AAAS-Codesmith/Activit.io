@@ -112,7 +112,7 @@ dbController.verifyUser = (req, res, next) => {
             // Log to let us know the passwords match
             console.log(`\u001b[1;32m User verified!`);
             res.locals.user_info = user;
-            res.locals.login_response = true;
+            res.locals.login_success = true;
             return next();
           }
           // If the passwords don't match

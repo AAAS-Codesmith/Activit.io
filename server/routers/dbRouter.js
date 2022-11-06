@@ -25,8 +25,7 @@ router.get('/teaminfo/:team_id', dbController.getTeamInfo, (req, res) => {
 // Route to verify user on login
 router.post('/login', dbController.verifyUser, (req, res) => {
   console.log(' Received response from dbController.verifyUser in dbRouter.js ');
-  console.log('res.locals.response: ',res.locals.login_response)
-  return res.status(200).json({login_success: true});
+  return res.status(200).json({login_success: res.locals.login_success});
 });
 
 // Route to add a new user to the database
