@@ -28,7 +28,7 @@ router.post('/login', dbController.verifyUser, (req, res) => {
 });
 
 // Route to add a new user to the database
-router.post('/user', dbController.createUser, (req, res) => {
+router.post('/register', dbController.createUser, (req, res) => {
   return res.status(200).json(res.locals.user_info);
 });
 
