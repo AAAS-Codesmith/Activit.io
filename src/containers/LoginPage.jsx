@@ -72,7 +72,7 @@ const handleSubmit = (e) => {
       <div className='login-page flex-column flex-center container-card'>
         <h1>Wonderpuss Says Hello!</h1>
         {greeting}
-        <form className='form'>
+        <form className='form' onSubmit={handleSubmit}>
           <p>
             Username:
             <input
