@@ -27,11 +27,12 @@ app.use((err, req, res, next) => {
     message: { err: 'An error occurred' },
   };
   const errorObj = Object.assign({}, defaultErr, err);
-  console.log(errorObj.log);
+  console.log(`\u001b[1;31m ${errorObj.log}`);
   return res.status(errorObj.status).json(errorObj.message);
 });
 
 
 app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+  console.log(`\u001b[1;35mServer listening at http://localhost:${port}`);
 });
+
