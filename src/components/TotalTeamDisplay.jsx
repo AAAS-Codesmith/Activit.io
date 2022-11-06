@@ -63,9 +63,6 @@ function TotalTeamDisplay() {
       <div className='teams-scroll-container'>
         <div className='teams-scroll'>
           {teamCardDisplay}
-          <button onClick={updateTeams}>
-            WTFFFFF
-          </button>
         </div>
       </div>
     </div >

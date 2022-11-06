@@ -14,6 +14,7 @@ import { useLocation } from 'react-router-dom';
 
 
 function TeamInfo(props) {
+  console.log('props . sync function?', props.sync)
   // Storing location information sent from Link 
   const location = useLocation();
   // Initialize state, dummy default data
@@ -30,7 +31,7 @@ function TeamInfo(props) {
       console.log('Old team info', teamInfo);
       console.log('New linked data', location.state);
       // Updating if different with new linked data
-      setUpdateTeam({ ...location.state});
+      setUpdateTeam({ ...location.state });
     }
   })
 
@@ -57,12 +58,16 @@ function TeamInfo(props) {
           // Create fetch POST adding activity to current Team DB
           // Updates state in TotalTeamDisplay
           // New updating teamActivities propagates down back here
-          setUpdateTeam(
+
+          // Alex:Alex fix this - Fires in App.jsx but no state change yet.
+          props.sync([
             {
-              ...teamInfo,
-              teamActivities: [...teamInfo.teamActivities, 'new activity']
+              team_id: 0,
+              teamName: 'Swap Data?',
+              teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
+              teamActivities: ['Testing initial team'],
             }
-          )
+          ])
         }
         }>
         Add Activity
