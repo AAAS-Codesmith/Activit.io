@@ -1,11 +1,8 @@
-const path = require('path');
 const express = require('express');
 const app = express();
 const port = 3000;
-const db = require('./db/db.js');
-const User = require('./db/mongo/UserModel.js');
-const Team = require('./db/mongo/TeamModel.js');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const boredRouter = require('./routers/boredRouter.js')
 const dbRouter = require('./routers/dbRouter.js');
 app.use(express.json());
@@ -18,9 +15,9 @@ app.use(cors());
 app.use('/api/activity', boredRouter)
 
 app.use('/db', dbRouter);
-// Unknown route handler
-app.use('*', (req, res) => res.sendStatus(404));
 
+// Catch all to redirect back to index.html
+app.use('*', (req, res) => res.redirect('/'));
 
 // Global error handler
 app.use((err, req, res, next) => {
