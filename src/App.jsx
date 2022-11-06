@@ -1,5 +1,5 @@
-import { Routes, Route, Link } from "react-router-dom";
-import React from 'react';
+import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from 'react';
 
 import LoginPage from './containers/LoginPage.jsx';
 import HomeButton from './components/HomeButton.jsx';
@@ -9,37 +9,49 @@ import TeamInfo from './containers/TeamInfo.jsx';
 import ActivityInfo from './containers/ActivityInfo.jsx';
 
 
-function App() {
 
-  const handleClick = () => {
-    fetch('/api')
-      .then(res => res.json())
-      .then(data => {
-        const fetchTestDiv = document.createElement('div');
-        fetchTestDiv.innerText = data;
-        document.getElementById('root').appendChild(fetchTestDiv);
-      })
-    console.log('Pressed!');
+function App() {
+  // Initialize state to be array of teams w/associated activities
+  const [userData, setUserData] = React.useState([]);
+  
+  // Goal: Pass setUserData to be invoked with fetched data anytime new data is created
+  function syncStatetoDB (data) {
+    console.log('Updating state with DB change');
+    setUserData(data);
   }
+
+  // useEffect like componentDidMount - One time call
+  useEffect(() => {
+    // Replace with fetch GET call
+    setUserData([
+      {
+        team_id: 0,
+        teamName: 'AAAS Test Long String Title Test',
+        teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
+        teamActivities: ['Testing initial team'],
+      },
+      {
+        team_id: 1,
+        teamName: 'AAAS Test Two',
+        teamMembers: ['Jared', 'Katrina', 'Kristin', 'Camera'],
+        teamActivities: ['Testing multiple teams'],
+      }
+    ])
+  }, []);
 
   return (
     <div className='main-app flex-column flex-center'>
       <HomeButton />
       <Routes>
-        {/* <Route path='/' element={<LoginPage />} /> */}
-        <Route path='/' element={<Home />} />
-        <Route path='/createTeam' element={<CreateTeam />} />
-        <Route path='/teamInfo' element={<TeamInfo />} />
-        <Route path='/activities' element={<ActivityInfo />} />
+        <Route path='/' element={<LoginPage />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/createTeam' element={<CreateTeam sync={syncStatetoDB} />} />
+        <Route path='/teamInfo' element={<TeamInfo sync={syncStatetoDB} />} />
+        <Route path='/activities' element={<ActivityInfo sync={syncStatetoDB} />} />
       </Routes>
-      <a>
-        <button className='button' onClick={handleClick}>Fetch test button!</button>
-      </a>
     </div>
   )
 }
 
-/*
-document.getElementById('test').innerText = 'yooo'
-*/
+
 export default App;
