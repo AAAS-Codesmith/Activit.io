@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ActivityInfo = () => {
-
+  const navigate = useNavigate();
   // Alex:Backend - What I expect to get more or less to populate state/page
   // Alex:Alex - State starts empty, populated based on drilled in data
   // from what we clicked on on the TotalActivityDisplay component
@@ -14,7 +15,9 @@ const ActivityInfo = () => {
 
   const deleteActivity = () => {
     // Alex:Backend + Self - Add  DELETE functionality
-    console.log('Deleting activity');
+    console.log('Deleting activity and returning home');
+    navigate('/home');
+
   }
 
   const friendsArr = dummyDBData.team_members.map(name => <li key={'temp' + name}>{name}</li>);
@@ -26,7 +29,21 @@ const ActivityInfo = () => {
         <h2>Team: {dummyDBData.team_id}</h2>
         <h2>People i'm going with</h2>
         {friendsArr}
-        <button className='button align-self-end' onClick={deleteActivity}>Delete Activity</button>
+        <Link to='/home'>
+          <button
+            className='button'
+            onClick={() => {
+              console.log('Going from Activity to Home')
+              navigate('/home')
+            }}>
+            Go Back
+          </button>
+        </Link>
+        <button
+          className='button align-self-end'
+          onClick={deleteActivity} >
+          Delete Activity
+        </button>
       </div>
     </div>
   )

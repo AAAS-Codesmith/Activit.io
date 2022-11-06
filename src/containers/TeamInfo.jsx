@@ -14,9 +14,9 @@ import { useLocation } from 'react-router-dom';
 
 
 function TeamInfo(props) {
+  console.log('props . sync function?', props.sync)
   // Storing location information sent from Link 
   const location = useLocation();
-
   // Initialize state, dummy default data
   const [teamInfo, setUpdateTeam] = React.useState({
     teamName: 'Dummy Data',
@@ -27,11 +27,11 @@ function TeamInfo(props) {
   // UseEffect Testing
   useEffect(() => {
     // Double checking current state and updated states
-    if (JSON.stringify(location.state) !== JSON.stringify(teamInfo)){
+    if (JSON.stringify(location.state) !== JSON.stringify(teamInfo)) {
       console.log('Old team info', teamInfo);
       console.log('New linked data', location.state);
       // Updating if different with new linked data
-      setUpdateTeam({...location.state});
+      setUpdateTeam({ ...location.state });
     }
   })
 
@@ -52,12 +52,24 @@ function TeamInfo(props) {
       {activities}
       <button
         className='button align-self-end'
-        onClick={() => setUpdateTeam(
-          {
-            ...teamInfo,
-            teamActivities: [...teamInfo.teamActivities, 'new activity temp']
-          }
-        )}>
+        onClick={() => {
+          console.log('Updating activities')
+          // Goals
+          // Create fetch POST adding activity to current Team DB
+          // Updates state in TotalTeamDisplay
+          // New updating teamActivities propagates down back here
+
+          // Alex:Alex fix this - Fires in App.jsx but no state change yet.
+          props.sync([
+            {
+              team_id: 0,
+              teamName: 'Swap Data?',
+              teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
+              teamActivities: ['Testing initial team'],
+            }
+          ])
+        }
+        }>
         Add Activity
       </button>
     </div>
