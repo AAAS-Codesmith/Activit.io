@@ -68,6 +68,7 @@ body {
   min-height: 100px;
   min-width: 150px;
   font-size: 20px;
+  margin: 0 !important;
   width: 100%;
   border-radius: 0px;
   flex: 1;
@@ -92,7 +93,7 @@ body {
 .form-input-box {
   width: 95%;
   min-height: 24px;
-  border: 1px solid gray;
+  border: 1px solid purple;
   border-radius: 12px;
   padding: 6px;
   background-color: rgb(51, 51, 51);
@@ -123,7 +124,18 @@ body {
   box-shadow: 8px 8px 4px 3px rgb(75, 47, 75);
   animation: 0.75s ease-out 0s 0.75 appear;
 }
-
+.login-page {
+  width: 40%;
+  box-shadow: 8px 8px 4px 3px rgb(37, 28, 37);
+}
+.login-page-container {
+  height: 100vh;
+  width: 100vw;
+  background-image: url('https://images.unsplash.com/photo-1566737236500-c8ac43014a67?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
+  background-size: cover;
+  background-position: center;
+  
+}
 
 
 @keyframes appear {
