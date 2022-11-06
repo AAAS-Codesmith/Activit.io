@@ -7,9 +7,7 @@ const LoginButtons = (props) => {
   return (
     <div>
       <Link>
-        <button
-          // Switch to registration page
-          onClick={props.swapRegister}>
+        <button onClick={props.swapRegister}>
           Register
         </button>
       </Link>

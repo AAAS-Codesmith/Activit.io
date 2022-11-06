@@ -5,7 +5,9 @@ const RegisterButtons = (props) => {
   return (
     <div>
       <Link to='/'>
-        <button onClick={props.swapLogin}>Cancel</button>
+        <button onClick={props.swapLogin}>
+          Cancel
+        </button>
       </Link>
       <Link>
         <button onClick={props.registerAccount}>Sign Up</button>

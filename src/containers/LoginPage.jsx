@@ -14,11 +14,13 @@ const LoginPage = () => {
   ////////////////////////////////
   // Swap Register/Login flag
   function registerPage() {    
+    clearFields();
     setAccountCreation(!accountCreation);
   }
   // Login
   function loginAccount() {
     console.log('Login attempted!\n' + 'Username:', username, '\nPassword:', password);
+    clearFields();
     // Check auth for login using <username> and <password>
     // Return boolean for conditional redirect in LoginButtons
     // true = login succesful, false = alert!
@@ -28,9 +30,15 @@ const LoginPage = () => {
   // Registration Body
   function registerAccount() {
     console.log('Registering Account!\n' + 'Username:', username, '\nPassword:', password);
-    // Clears fields after registerring
-    // Submit POST request with <username> and <password>
+    clearFields();
+    // Alex:Backend Submit POST request with <username> and <password>
 
+
+  }
+  // Clear User/PW fields
+  function clearFields() {
+    document.querySelector('#username').value = '';
+    document.querySelector('#password').value = '';
   }
 
   // Conditional Rendering on Login/Register
@@ -41,10 +49,12 @@ const LoginPage = () => {
   const landingButtons = !accountCreation
     ? <LoginButtons
       swapRegister={registerPage} 
-      loginAccount={loginAccount} />
+      loginAccount={loginAccount} 
+      clearFields={clearFields} />
     : <RegisterButtons
       swapLogin={registerPage}
-      registerAccount={registerAccount} />
+      registerAccount={registerAccount} 
+      clearFields={clearFields} />
 
   
   return (
