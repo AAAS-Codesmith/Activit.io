@@ -1,6 +1,7 @@
 // Will solely be used to set up the database connection
 // Import path module
 const path = require('path');
+const cors = require('cors');
 // Import mongoose
 const mongoose = require('mongoose');
 require('dotenv').config({path: path.resolve(__dirname, '../../process.env')});

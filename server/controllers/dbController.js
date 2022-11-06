@@ -96,7 +96,7 @@ dbController.verifyUser = (req, res, next) => {
   console.log("Received username: " + username + " and password: " + password);
 
   // Find the user in the database
-  User.findOne({username})
+  User.findOne({username:username})
     .then((user) => {
       // Log to let us know the user was found
       console.log(`\u001b[1:32m User found in database: `);
@@ -112,6 +112,7 @@ dbController.verifyUser = (req, res, next) => {
             // Log to let us know the passwords match
             console.log(`\u001b[1;32m User verified!`);
             res.locals.user_info = user;
+            res.locals.login_response = true;
             return next();
           }
           // If the passwords don't match
@@ -191,6 +192,8 @@ dbController.createUser = async (req, res, next) => {
           console.group();
           console.log(user);
           console.groupEnd();
+          res.locals.user_info = user;
+          res.locals.register_response = true;
           // Move to the next middleware
           return next();
         })

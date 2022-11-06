@@ -1,7 +1,7 @@
 const express = require('express');
 const dbController = require('../controllers/dbController.js');
 const router = express.Router();
-
+const cors = require('cors');
 // Figure out what sort of get requests may be necessary
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -24,12 +24,14 @@ router.get('/teaminfo/:team_id', dbController.getTeamInfo, (req, res) => {
 
 // Route to verify user on login
 router.post('/login', dbController.verifyUser, (req, res) => {
-  return res.status(200).json(res.locals.user_info);
+  console.log(' Received response from dbController.verifyUser in dbRouter.js ');
+  console.log('res.locals.response: ',res.locals.login_response)
+  return res.status(200).json({login_success: true});
 });
 
 // Route to add a new user to the database
 router.post('/register', dbController.createUser, (req, res) => {
-  return res.status(200).json(res.locals.user_info);
+  return res.status(200).json(res.locals.register_response);
 });
 
 // Route to add a new team to the database
