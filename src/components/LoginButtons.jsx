@@ -5,14 +5,14 @@ const LoginButtons = (props) => {
   // Navigate hook for login conditional
   const navigate = useNavigate();
   return (
-    <div>
+    <div style={{display: 'flex', justifyContent: 'space-between'}}>
       <Link>
-        <button onClick={props.swapRegister}>
+        <button className='button' onClick={props.swapRegister}>
           Register
         </button>
       </Link>
 
-      <button onClick={() => {
+      <button className='button' onClick={() => {
         // Conditional login or wrong
         return props.loginAccount()
           ? navigate('/home')

@@ -59,30 +59,34 @@ const LoginPage = () => {
 
 
   return (
-    <div>
-      <h1>Wonderpuss Says Hello!</h1>
-      {greeting}
-      <form>
-        <p>
-          Username:
-          <input
-            id='username'
-            type='text'
-            onChange={() => setUsername(document.querySelector('#username').value)}
-          >
-          </input>
-        </p>
-        <p>
-          Password:
-          <input
-            id='password'
-            type='password'
-            onChange={() => setPassword(document.querySelector('#password').value)}
-          >
-          </input>
-        </p>
-        {landingButtons}
-      </form>
+    <div className='login-page-container flex-column' style={{alignItems: 'center'}}>
+      <div className='login-page flex-column flex-center container-card'>
+        <h1>Wonderpuss Says Hello!</h1>
+        {greeting}
+        <form className='form'>
+          <p>
+            Username:
+            <input
+              id='username'
+              type='text'
+              className='form-input-box'
+              onChange={() => setUsername(document.querySelector('#username').value)}
+            >
+            </input>
+          </p>
+          <p>
+            Password:
+            <input
+              id='password'
+              type='password'
+              className='form-input-box'
+              onChange={() => setPassword(document.querySelector('#password').value)}
+            >
+            </input>
+          </p>
+          {landingButtons}
+        </form>
+      </div>
     </div>
   )
 }
