@@ -3,6 +3,7 @@ import LoginButtons from '../components/LoginButtons.jsx';
 import RegisterButtons from '../components/RegisterButtons.jsx';
 import LogIn from '../components/LogIn.jsx';
 import Register from '../components/Register.jsx';
+import axios, { AxiosHeaders } from 'axios';
 
 const LoginPage = () => {
   // Boolean flag for conditional rendering
@@ -10,6 +11,7 @@ const LoginPage = () => {
   // Access current user/pw state here. Updates w/useState so dont need to query
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [login_success, setLoginSuccess] = React.useState(false);
 
   ////////////////////////////////
   ////// Handler Functions //////
@@ -19,24 +21,28 @@ const LoginPage = () => {
     clearFields();
     setAccountCreation(!accountCreation);
   }
-  // Login Attempts
-  function loginAccount() {
-    console.log('Login attempted!\n' + 'Username:', username, '\nPassword:', password);
-    clearFields();
-    // Alex: Backend
-    // Check auth for login using <username> and <password>
-    // Return boolean for conditional redirect in LoginButtons
-    // true = login succesful, false = alert!
-    // Details in LoginButtons.jsx
-    return true;
-  }
+
+ 
   // Registration Body
   function registerAccount() {
     console.log('Registering Account!\n' + 'Username:', username, '\nPassword:', password);
     clearFields();
     // Alex:Backend Submit POST request with <username> and <password>
 
+    // Ahsan: Backend Work
+    // Send POST request to backend with username and password
+    // Backend will check if username is valid and, if so, will add to database
+    // If valid, will return true, else false
+    const serverResponse = axios.post('/db/register', {
+      username,
+      password
+    })
+    .then((response) => {
+      return response.register_response;
+    })
 
+    console.log('Server Response: ', serverResponse);
+    return serverResponse;
   }
   // Clear User/PW fields
   function clearFields() {
@@ -52,17 +58,20 @@ const LoginPage = () => {
   const landingButtons = !accountCreation
     ? <LoginButtons
       swapRegister={registerPage}
-      loginAccount={loginAccount} />
+      username={username}
+      password={password} />
     : <RegisterButtons
       swapLogin={registerPage}
       registerAccount={registerAccount} />
-
+const handleSubmit = (e) => {
+  e.preventDefault();
+}
 
   return (
     <div>
       <h1>Wonderpuss Says Hello!</h1>
       {greeting}
-      <form>
+      <form onSubmit={handleSubmit}>
         <p>
           Username:
           <input
