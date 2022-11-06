@@ -42,12 +42,7 @@ const LoginButtons = (props) => {
       </Link>
 
 
-      <button className='button' onClick={() => {
-        // Conditional login or wrong
-        return props.loginAccount()
-          ? navigate('/home')
-          : alert('Wrong login information!');
-      }}>
+      <button className='button' onClick={handleClick}>
         Login
       </button>
 
