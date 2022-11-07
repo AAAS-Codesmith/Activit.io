@@ -1,39 +1,64 @@
-/*
-  TeamInfo Page goals: 
-    [x]See Team info (TeamID, Team Members, List of activities)
-    [x]Display all activities from DB as components
-      [x]Alex:Alex set up state of page from info on the DB call
-      [x]Info is drilled in from specific team id reference in component above (TotalTeamDisplay)
-    []Create 'Add Activity' button
-      []Fetches from API for an activity based on group size (other info/preferences can be stretch)
-      []Adds activity to our DB into our specific team's activities
-      []Alex:Alex Resync DB to state with hooks
-*/
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { TeamsContext } from '../App.jsx';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
 function TeamInfo(props) {
-  console.log('props . sync function?', props.sync)
-  // Storing location information sent from Link 
+  const navigate = useNavigate();
   const location = useLocation();
-  // Initialize state, dummy default data
-  const [teamInfo, setUpdateTeam] = React.useState({
-    teamName: 'Dummy Data',
-    teamMembers: ['User1', 'User2', 'User3', 'User4'],
-    teamActivities: ['Dummy Event'],
-  });
+  const totalTeamsArr = useContext(TeamsContext);
+  
+  const currTeam = totalTeamsArr.filter(obj => obj.teamName === location.state.teamName)
+  console.log('totalTeamsArr', totalTeamsArr);
+  console.log('currTeam', currTeam);
 
-  // UseEffect Testing
-  useEffect(() => {
-    // Double checking current state and updated states
-    if (JSON.stringify(location.state) !== JSON.stringify(teamInfo)) {
-      console.log('Old team info', teamInfo);
-      console.log('New linked data', location.state);
-      // Updating if different with new linked data
-      setUpdateTeam({ ...location.state });
+  // Initialize state to currTeams data (Obj)
+  // *currTeam is a single object inside of an array which is why the spread
+  const [teamInfo, setUpdateTeam] = React.useState(...currTeam);
+  console.log('Current team info state:', teamInfo);
+
+  // Alex:Backend - Fetch activity from API and parse into following
+  const getActivity = () => {
+    // Test data to generate random activity (replace with API fetch)
+    const arrActivities = ['Run', 'Walk', 'Movies', 'Party', 'Cry', 'APC'];
+    let testActivity = arrActivities[Math.floor(Math.random() * arrActivities.length)];
+
+    // clone to keep track of current team to update current team info state with
+    let currTeamClone;
+    // clone of total teams state to update App.jsx with
+    const totalTeamsClone = [...totalTeamsArr];
+    // Iterating to find our currentTeam to mutate
+    for (const team of totalTeamsClone) {
+      if (team.teamName === location.state.teamName) {
+        // Ensures we don't double the same activity in the same team
+        // ** Infinite loop if we click more than the data I set up on arrActivities
+        while (team.teamActivities.includes(testActivity)) {
+          testActivity = arrActivities[Math.floor(Math.random() * arrActivities.length)];
+        }
+        // Add to our totalTeams specific team activities
+        team.teamActivities.push(testActivity);
+        // Assign this team's info to our currTeamClone
+        currTeamClone = team;
+      }
     }
-  })
+
+    // useState helper updates our App.jsx total state for this user
+    props.sync(totalTeamsClone)
+    setUpdateTeam({ ...currTeamClone })
+  }
+
+  const deleteTeam = () => {
+    console.log('Deleting team:', teamInfo.teamName);
+    const deletionClone = [...totalTeamsArr];
+    for (let i = 0; i < deletionClone.length; i++) {
+      if (deletionClone[i].teamName === teamInfo.teamName) {
+        deletionClone.splice(i, 1);
+      }
+    }
+    alert('Team has been deleted!');
+    props.sync(deletionClone);
+    navigate('/home')
+  }
 
   // Populate team members + activities
   const teamMembers = teamInfo.teamMembers.map(ele =>
@@ -50,26 +75,17 @@ function TeamInfo(props) {
       {teamMembers}
       <h2>Activities</h2>
       {activities}
+      <button 
+      className='button'
+      onClick={() => deleteTeam()}>
+        Delete Team
+      </button>
       <button
         className='button align-self-end'
         onClick={() => {
           console.log('Updating activities')
-          // Goals
-          // Create fetch POST adding activity to current Team DB
-          // Updates state in TotalTeamDisplay
-          // New updating teamActivities propagates down back here
-
-          // Alex:Alex fix this - Fires in App.jsx but no state change yet.
-          props.sync([
-            {
-              team_id: 0,
-              teamName: 'Swap Data?',
-              teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
-              teamActivities: ['Testing initial team'],
-            }
-          ])
-        }
-        }>
+          getActivity();
+        }}>
         Add Activity
       </button>
     </div>

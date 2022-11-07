@@ -5,7 +5,8 @@ const NewMemberEntry = (props) => {
     <div>
       <label for='member'>Member {props.memberNum}</label>
       <input
-        className="form-input-box"
+        required
+        className="form-input-box new-members"
         type='text'
       >
       </input>

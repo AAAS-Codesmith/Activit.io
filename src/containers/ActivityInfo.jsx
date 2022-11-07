@@ -1,32 +1,44 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { TeamsContext } from '../App.jsx';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-const ActivityInfo = () => {
+const ActivityInfo = (props) => {
+  // useNavigate hook to help redirect pages
   const navigate = useNavigate();
-  // Alex:Backend - What I expect to get more or less to populate state/page
-  // Alex:Alex - State starts empty, populated based on drilled in data
-  // from what we clicked on on the TotalActivityDisplay component
-  const dummyDBData = {
-    team_id: 'AAAS',
-    team_members: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
-    team_activity: 'Creating a scratch project',
-    // Add more data from API/DB if time allows later
-  }
+  // useLocation hook to help keep state/props from Link before
+  const location = useLocation();
+  const totalTeamsArr = useContext(TeamsContext);
+
+  // Initial state set to current activities props with associated team information
+  const [currActivity, setCurrActivity] = React.useState(location.state);
+  console.log('currActivity props', currActivity);
+
 
   const deleteActivity = () => {
-    // Alex:Backend + Self - Add  DELETE functionality
+    // Alex:Backend DELETE functionality
     console.log('Deleting activity and returning home');
+    // Find current team in our context data to remove activity
+    const teamsContextClone = [...totalTeamsArr];
+    for (const team of teamsContextClone) {
+      if (team.teamName === currActivity.teamName) {
+        const activityIdx = team.teamActivities.indexOf(currActivity.activity);
+        team.teamActivities.splice(activityIdx, 1);
+        break;
+      }
+    }
+    alert('Deleted activity!');
+    props.sync(teamsContextClone);
     navigate('/home');
-
   }
 
-  const friendsArr = dummyDBData.team_members.map(name => <li key={'temp' + name}>{name}</li>);
+  // Mapping team members
+  const friendsArr = currActivity.teamMembers.map(name => <li key={name}>{name}</li>);
+
   return (
     <div className='flex-column flex-center activity-info container-card'>
-      <h1>Name of Activity depending on info passed down</h1>
+      <h1>{currActivity.activity}</h1>
       <div className='flex-column'>
-        <h2>Activity: {dummyDBData.team_activity}</h2>
-        <h2>Team: {dummyDBData.team_id}</h2>
+        <h2>Team: {currActivity.teamName}</h2>
         <h2>People i'm going with</h2>
         {friendsArr}
         <Link to='/home'>
