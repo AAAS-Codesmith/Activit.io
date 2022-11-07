@@ -37,11 +37,13 @@ boredController.getType = (req,res,next) => {
 }
 
 boredController.getPeople = (req,res,next) => {
-    console.log('in getPeople MW')
+    console.log('in getPeople MW');
+    console.log(req.params.number);
     const number = req.params.number;
     axios.get(`http://www.boredapi.com/api/activity?participants=${number}`)
     .then(data => {
         res.locals.info = data.data;
+        console.log('getPeople Success');
         return next()
     })
     .catch(err => {

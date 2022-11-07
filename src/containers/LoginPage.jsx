@@ -5,7 +5,7 @@ import LogIn from '../components/LogIn.jsx';
 import Register from '../components/Register.jsx';
 import axios, { AxiosHeaders } from 'axios';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   // Boolean flag for conditional rendering
   const [accountCreation, setAccountCreation] = React.useState(false);
   // Access current user/pw state here. Updates w/useState so dont need to query
@@ -22,7 +22,7 @@ const LoginPage = () => {
     setAccountCreation(!accountCreation);
   }
 
- 
+
   // Registration Body
   function registerAccount() {
     console.log('Registering Account!\n' + 'Username:', username, '\nPassword:', password);
@@ -37,9 +37,9 @@ const LoginPage = () => {
       username,
       password
     })
-    .then((response) => {
-      return response.register_response;
-    })
+      .then((response) => {
+        return response.register_response;
+      })
 
     console.log('Server Response: ', serverResponse);
     return serverResponse;
@@ -59,16 +59,21 @@ const LoginPage = () => {
     ? <LoginButtons
       swapRegister={registerPage}
       username={username}
-      password={password} />
+      password={password}
+      setUser={props.setUser}
+    />
     : <RegisterButtons
       swapLogin={registerPage}
-      registerAccount={registerAccount} />
-const handleSubmit = (e) => {
-  e.preventDefault();
-}
+      registerAccount={registerAccount}
+      accountCreation={accountCreation}
+      setAccountCreation={setAccountCreation}
+    />
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
 
   return (
-    <div className='login-page-container flex-column' style={{alignItems: 'center'}}>
+    <div className='login-page-container flex-column' style={{ alignItems: 'center' }}>
       <div className='login-page flex-column flex-center container-card'>
         <h1>Wonderpuss Says Hello!</h1>
         {greeting}
@@ -80,6 +85,7 @@ const handleSubmit = (e) => {
               type='text'
               className='form-input-box'
               onChange={() => setUsername(document.querySelector('#username').value)}
+
             >
             </input>
           </p>

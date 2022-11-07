@@ -24,7 +24,12 @@ const LoginButtons = (props) => {
       .then(res => res.json())
       .then(data => {
         console.log('Login response: ', data.login_success);
-        if(data.login_success === true) return navigate('/home');
+
+        if(data.login_success === true) {
+          console.log('Set user function def from Buttons', props.setUser)
+          props.setUser(props.username)
+          return navigate('/home', {state: props.username});
+        }
       })
       .catch(err => {
         console.error('Error: ', err);
