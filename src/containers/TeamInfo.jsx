@@ -11,10 +11,12 @@
 */
 import React, { useEffect, useState, useContext } from 'react';
 import { TeamsContext } from '../App.jsx';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
 function TeamInfo(props) {
+  // useNavigate hook to redirect
+  const navigate = useNavigate();
   // Storing location information sent fom Link 
   const location = useLocation();
   // Passing in total teams state from App.jsx (Arr of Objects)
@@ -62,6 +64,19 @@ function TeamInfo(props) {
     setUpdateTeam({ ...currTeamClone })
   }
 
+  const deleteTeam = () => {
+    console.log('Deleting team:', teamInfo.teamName);
+    const deletionClone = [...totalTeamsArr];
+    for (let i = 0; i < deletionClone.length; i++) {
+      if (deletionClone[i].teamName === teamInfo.teamName) {
+        deletionClone.splice(i, 1);
+      }
+    }
+    alert('Team has been deleted!');
+    props.sync(deletionClone);
+    navigate('/home')
+  }
+
   // Populate team members + activities
   const teamMembers = teamInfo.teamMembers.map(ele =>
     <li key={ele}>{ele}</li>
@@ -77,6 +92,11 @@ function TeamInfo(props) {
       {teamMembers}
       <h2>Activities</h2>
       {activities}
+      <button 
+      className='button'
+      onClick={() => deleteTeam()}>
+        Delete Team
+      </button>
       <button
         className='button align-self-end'
         onClick={() => {

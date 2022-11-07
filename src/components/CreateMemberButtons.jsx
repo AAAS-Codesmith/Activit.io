@@ -18,10 +18,10 @@ const CreateMemberButtons = (props) => {
       <button onClick={() => {
         if (props.memberEntries.length) {
           props.setMemberLength(props.memberLength - 1);
+          props.deleteMember();
         } else {
           alert('Don\'t delete yourself!');
         }
-        props.deleteMember();
       }}>Delete Member</button>
       <button onClick={() => {
         if (props.memberLength === 4)
