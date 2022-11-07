@@ -34,7 +34,9 @@ function TotalTeamDisplay() {
       </Link>
       <div className='teams-scroll-container'>
         <div className='teams-scroll'>
-          {teamCardDisplay}
+          {teamCardDisplay.length
+            ? teamCardDisplay
+            : <h2>Make a squad!</h2>}
         </div>
       </div>
     </div >

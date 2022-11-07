@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TeamsContext } from '../App.jsx';
 import NewMemberEntry from '../components/NewMemberEntry.jsx';
 import CreateMemberButtons from '../components/CreateMemberButtons.jsx';
 
 function CreateTeam(props) {
+  const navigate = useNavigate();
   const totalTeamsArr = useContext(TeamsContext);
   const [teamName, setTeamName] = React.useState('');
 
@@ -54,6 +55,7 @@ function CreateTeam(props) {
     setMemberLength(1);
     setMemberEntries([]);
     formData.target.reset();
+    navigate('/home');
   }
 
   return (
