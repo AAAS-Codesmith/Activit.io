@@ -15,6 +15,7 @@ function TotalActivityDisplay() {
     for (const activity of currTeam.teamActivities) {
       totalArr.push(
         <ActivityCard 
+          key={currTeam.teamName + activity}
           teamName={currTeam.teamName}
           teamMembers={currTeam.teamMembers}
           activity={activity}

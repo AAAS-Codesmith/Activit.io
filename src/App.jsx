@@ -27,14 +27,14 @@ function App() {
       {
         team_id: 0,
         teamName: 'Wonderpuss Bois',
-        teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
-        teamActivities: ['Testing initial team'],
+        teamMembers: ['Me', 'Kim', 'Pete', 'Ari'],
+        teamActivities: ['Stir drama'],
       },
       {
         team_id: 1,
         teamName: 'Codesmith Squad',
-        teamMembers: ['Jared', 'Katrina', 'Kristin', 'Camera'],
-        teamActivities: ['Testing multiple teams'],
+        teamMembers: ['Me', 'Jared', 'Katrina', 'Will'],
+        teamActivities: ['Get an APC'],
       }
     ])
   }, []);

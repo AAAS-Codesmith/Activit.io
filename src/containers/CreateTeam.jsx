@@ -1,21 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { TeamsContext } from '../App.jsx';
 import NewMemberEntry from '../components/NewMemberEntry.jsx';
 import CreateMemberButtons from '../components/CreateMemberButtons.jsx';
 
-function CreateTeam() {
+function CreateTeam(props) {
+  const totalTeamsArr = useContext(TeamsContext);
   const [teamName, setTeamName] = React.useState('');
-  const [memberOne, setMemberOne] = React.useState('');
-  const [memberTwo, setMemberTwo] = React.useState('');
-  const [memberThree, setMemberThree] = React.useState('');
-  const [memberFour, setMemberFour] = React.useState('');
 
   // State to track how many teammates you have
   const [memberLength, setMemberLength] = React.useState(1);
   const [memberEntries, setMemberEntries] = React.useState([]);
-  // Stretch: Add a remove member feature to remove last additional
-  // Will only appear if more than 1 member
-  // Will disappear if only 1 member available. Can't delete yourself.
 
   //////////////////////////////////
   //// Modifying Member Entries ////
@@ -27,33 +22,47 @@ function CreateTeam() {
   }
 
   const deleteMember = () => {
-    const memberClone = [...memberEntries];
-    console.log('deleting member:', memberClone.pop());
-    setMemberEntries(memberClone);
+    if (!memberEntries.length) console.log('No new members to delete')
+    else {
+      console.log('Removing member entry')
+      const memberClone = memberEntries.slice(0, -1);
+      setMemberEntries(memberClone);
+    }
   }
 
   const createTeam = (formData) => {
-    // Alex:Ahsan - Double check what info you need to put into DB
-    // Form needs to be modified to take in data from submit
     console.log('Team ID + Members deposited into DB')
+    const teamName = formData.target[0].value;
+    // Turned NodeList into Arr so we can use methods map
+    const newMembersArr = [...document.querySelectorAll('.new-members')].map(node => node.value);
     console.log(`
-      Team Name: ${teamName}
-      Member1: ${memberOne}
-      Member2: ${memberTwo}
-      Member3: ${memberThree}
-      Member4: ${memberFour}
+      Team: ${teamName}
+      NewMembers: ${newMembersArr}
     `)
-    // Todo: Parse into acceptable data syntax for DB
+    // Alex:Backend - POST new team info to DB
+    // Test POST
+    const newTeam = {
+      team_id: undefined,
+      teamName,
+      teamMembers: ['Me'].concat(newMembersArr),
+      teamActivities: []
+    }
+    // Update higher state DB
+    props.sync([...totalTeamsArr].concat(newTeam));
+    // Alert that team has been created
+    alert(`Team ${teamName} has been created!`);
+    setMemberLength(1);
+    setMemberEntries([]);
+    formData.target.reset();
   }
 
   return (
     <div className='create-team flex-column flex-center container-card'>
       <h1>Create Team</h1>
       <form className='form flex-column' onSubmit={(e) => {
-        e.preventDefault();
         console.log('Team Creation Submitted!')
-        console.log(e)
-        createTeam(e.target.value);
+        e.preventDefault();
+        createTeam(e);
       }}>
         <div>
           <label for='name'>Team name:</label>
@@ -66,31 +75,27 @@ function CreateTeam() {
           >
           </input>
         </div>
-        {/* Default current user entry. Immutable. */}
         <div id='members-container'>
           <label for='member'>Member 1</label>
           <input
             required
-            readonly
+            readOnly
             unselectable="on"
             id='member1'
             className="form-input-box"
             type='text'
-            value='Readonly Static - Current User'
+            value='Current User - Get from DB/Login?'
           >
           </input>
         </div>
-        {/* Populated via state array */}
         {memberEntries}
-        {/* Can be refactored for more efficient variables */}
-        <CreateMemberButtons 
+        <CreateMemberButtons
           memberLength={memberLength}
           memberEntries={memberEntries}
           setMemberLength={setMemberLength}
           addMember={addMember}
           deleteMember={deleteMember}
         />
-
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Link to='/home'><button className='button'>Cancel</button></Link>
           <input
@@ -100,8 +105,6 @@ function CreateTeam() {
           >
           </input>
         </div>
-
-
       </form>
     </div>
   )
