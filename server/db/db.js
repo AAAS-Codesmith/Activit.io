@@ -7,8 +7,7 @@ const mongoose = require('mongoose');
 require('dotenv').config({path: path.resolve(__dirname, '../../process.env')});
 
 // Import the database URI from the .env file
-// MONGO_URI="mongodb+srv://grey:codesmith@cluster0.j3rhfed.mongodb.net/?retryWrites=true&w=majority"
-const mongoDB = "mongodb+srv://grey:codesmith@cluster0.j3rhfed.mongodb.net/?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGOURI;
 
 console.log('\n');
 console.log('\u001b[1;36mmongoDB: ', mongoDB);
