@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { TeamsContext } from '../App.jsx';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const ActivityInfo = (props) => {
@@ -6,6 +7,7 @@ const ActivityInfo = (props) => {
   const navigate = useNavigate();
   // useLocation hook to help keep state/props from Link before
   const location = useLocation();
+  const totalTeamsArr = useContext(TeamsContext);
 
   // Initial state set to current activities props with associated team information
   const [currActivity, setCurrActivity] = React.useState(location.state);
@@ -15,6 +17,17 @@ const ActivityInfo = (props) => {
   const deleteActivity = () => {
     // Alex:Backend DELETE functionality
     console.log('Deleting activity and returning home');
+    // Find current team in our context data to remove activity
+    const teamsContextClone = [...totalTeamsArr];
+    for (const team of teamsContextClone) {
+      if (team.teamName === currActivity.teamName) {
+        const activityIdx = team.teamActivities.indexOf(currActivity.activity);
+        team.teamActivities.splice(activityIdx, 1);
+        break;
+      }
+    }
+    alert('Deleted activity!');
+    props.sync(teamsContextClone);
     navigate('/home');
   }
 
