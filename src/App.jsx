@@ -26,13 +26,13 @@ function App() {
     setUserData([
       {
         team_id: 0,
-        teamName: 'AAAS Test Long String Title Test',
+        teamName: 'Wonderpuss Bois',
         teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
         teamActivities: ['Testing initial team'],
       },
       {
         team_id: 1,
-        teamName: 'AAAS Test Two',
+        teamName: 'Codesmith Squad',
         teamMembers: ['Jared', 'Katrina', 'Kristin', 'Camera'],
         teamActivities: ['Testing multiple teams'],
       }

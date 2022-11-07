@@ -33,7 +33,7 @@ function TeamInfo(props) {
   // Alex:Backend - Fetch activity from API and parse into following
   const getActivity = () => {
     // Test data to generate random activity (replace with API fetch)
-    const arrActivities = ['run', 'walk', 'movie', 'party', 'cry'];
+    const arrActivities = ['Run', 'Walk', 'Movies', 'Party', 'Cry', 'APC'];
     let testActivity = arrActivities[Math.floor(Math.random() * arrActivities.length)];
 
     // clone to keep track of current team to update current team info state with
