@@ -17,15 +17,50 @@ import { useLocation } from 'react-router-dom';
 function TeamInfo(props) {
   // Storing location information sent fom Link 
   const location = useLocation();
-  console.log('location states teamName', location.state.teamName)
-  const teamContextFilter = useContext(TeamsContext);
-  const specificTeam = teamContextFilter.filter(obj => obj.teamName === location.state.teamName)
-  console.log('teamContextFilter', teamContextFilter);
-  console.log('specificTeam', specificTeam);
-  // Initialize state, dummy default data
-  const [teamInfo, setUpdateTeam] = React.useState(...specificTeam);
+  // Passing in total teams state from App.jsx (Arr of Objects)
+  const totalTeamsArr = useContext(TeamsContext);
+  // Filter to find this specific team's info from totalTeams
+  const currTeam = totalTeamsArr.filter(obj => obj.teamName === location.state.teamName)
+  console.log('totalTeamsArr', totalTeamsArr);
+  console.log('currTeam', currTeam);
+
+  // Initialize state to currTeams data (Obj)
+  // *currTeam is a single object inside of an array which is why the spread
+  const [teamInfo, setUpdateTeam] = React.useState(...currTeam);
   console.log('Current team info state:', teamInfo);
 
+  // Generate an activity.
+  // Alex:Backend - Fetch activity from API and parse into following
+  const getActivity = () => {
+    // Test data to generate random activity (replace with API fetch)
+    const arrActivities = ['run', 'walk', 'movie', 'party', 'cry'];
+    let testActivity = arrActivities[Math.floor(Math.random() * arrActivities.length)];
+
+    // clone to keep track of current team to update current team info state with
+    let currTeamClone;
+    // clone of total teams state to update App.jsx with
+    const totalTeamsClone = [...totalTeamsArr];
+    // Iterating to find our currentTeam to mutate
+    for (const team of totalTeamsClone) {
+      if (team.teamName === location.state.teamName) {
+        // Ensures we don't double the same activity in the same team
+        // ** Infinite loop if we click more than the data I set up on arrActivities
+        while (team.teamActivities.includes(testActivity)) {
+          testActivity = arrActivities[Math.floor(Math.random() * arrActivities.length)];
+        }
+        // Add to our totalTeams specific team activities
+        team.teamActivities.push(testActivity);
+        // Assign this team's info to our currTeamClone
+        currTeamClone = team;
+      }
+    }
+
+    // useState helper updates our App.jsx total state for this user
+    // (Arr of objects)
+    props.sync(totalTeamsClone)
+    // useState to update our current page's data
+    setUpdateTeam({ ...currTeamClone })
+  }
 
   // Populate team members + activities
   const teamMembers = teamInfo.teamMembers.map(ele =>
@@ -46,29 +81,8 @@ function TeamInfo(props) {
         className='button align-self-end'
         onClick={() => {
           console.log('Updating activities')
-          // Goals
-          // Create fetch POST adding activity to current Team DB
-          // Updates state in TotalTeamDisplay
-          // New updating teamActivities propagates down back here
-
-          // Add running
-          // useState => Add running
-          // sync->App.jsx = update state + DB
-          const arrActivities = ['run', 'walk', 'movie', 'party'];
-          const testActvity = arrActivities[Math.floor(Math.random() * arrActivities.length)];
-          const newActivityArr = [...teamInfo.teamActivities].concat(testActvity)
-          // Alex:Alex fix this - Fires in App.jsx but no state change yet.
-          props.sync([
-            {
-              team_id: 0,
-              teamName: 'AAAS Test Long String Title Test',
-              teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
-              teamActivities: newActivityArr,
-            }
-          ])
-          setUpdateTeam({...teamInfo, teamActivities: newActivityArr})
-        }
-        }>
+          getActivity();
+        }}>
         Add Activity
       </button>
     </div>

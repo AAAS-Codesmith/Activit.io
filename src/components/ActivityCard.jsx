@@ -1,15 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ActivityCard = () => {
-  
+const ActivityCard = (props) => {
   return (
     <div>
-      <Link to='/activities' >
-        <button className='button' onClick={() => {
-          console.log('Move to activity')
-        }}>
-          ACTIVITY
+      <Link
+        to='/activities'
+        state={props}
+      >
+        <button className='button' onClick={console.log('Move to activity')}>
+          <div>
+            <h2>{props.activity}</h2>
+            <p>Team: {props.teamName}</p>
+          </div>
         </button>
       </Link>
     </div>

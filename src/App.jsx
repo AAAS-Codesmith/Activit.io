@@ -22,7 +22,7 @@ function App() {
 
   // useEffect like componentDidMount - One time call
   useEffect(() => {
-    // Replace with fetch GET call
+    // Replace with fetch GET call to give us array of teams with associated activities
     setUserData([
       {
         team_id: 0,

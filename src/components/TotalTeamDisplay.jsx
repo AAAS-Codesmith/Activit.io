@@ -4,6 +4,7 @@ import { TeamsContext } from '../App.jsx';
 import { Link } from 'react-router-dom';
 
 function TotalTeamDisplay() {
+  // TotalTeams State Arr from App.jsx
   const teamsContextData = useContext(TeamsContext);
   console.log('Context data', teamsContextData);
 
