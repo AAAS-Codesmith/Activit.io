@@ -1,52 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import TeamCard from './TeamCard.jsx';
+import { TeamsContext } from '../App.jsx';
 import { Link } from 'react-router-dom';
 
 function TotalTeamDisplay() {
-  // Alex:Backend Replace with Fetch GET from DB
-  const dummyTeamsArr = [
-    {
-      team_id: 0,
-      teamName: 'AAAS Test Long String Title Test',
-      teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
-      teamActivities: ['Testing initial team'],
-    },
-    {
-      team_id: 1,
-      teamName: 'AAAS Test Two',
-      teamMembers: ['Jared', 'Katrina', 'Kristin', 'Camera'],
-      teamActivities: ['Testing multiple teams'],
-    }
-  ];
+  const teamsContextData = useContext(TeamsContext);
+  console.log('Context data', teamsContextData);
 
   // Set initial state
-  const [totalTeams, setUpdateTeams] = React.useState(dummyTeamsArr)
-
-  const updateTeams = (data) => {
-    console.log('test button')
-    // setUpdateTeams(data);
-    setUpdateTeams([{
-        team_id: 0,
-      teamName: 'TESSSST',
-      teamMembers: ['ahh', 'ahh', 'ahh', 'ahh'],
-      teamActivities: ['Testing initial team'],
-    }])
-  }
-
-  function test() {
-    console.log('hi')
-  }
+  const [totalTeams, setUpdateTeams] = React.useState(teamsContextData);
 
   // Parse through to create team card displays
   const teamCardDisplay = totalTeams.map(team => {
-    // console.log(updateTeams)
     return (
       <TeamCard
         key={team.team_id}
         teamName={team.teamName}
         teamMembers={team.teamMembers}
         teamActivities={team.teamActivities}
-        // teamFunction={updateTeams}
       />
     )
   }

@@ -9,31 +9,23 @@
       []Adds activity to our DB into our specific team's activities
       []Alex:Alex Resync DB to state with hooks
 */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { TeamsContext } from '../App.jsx';
 import { useLocation } from 'react-router-dom';
 
 
 function TeamInfo(props) {
-  console.log('props . sync function?', props.sync)
-  // Storing location information sent from Link 
+  // Storing location information sent fom Link 
   const location = useLocation();
+  console.log('location states teamName', location.state.teamName)
+  const teamContextFilter = useContext(TeamsContext);
+  const specificTeam = teamContextFilter.filter(obj => obj.teamName === location.state.teamName)
+  console.log('teamContextFilter', teamContextFilter);
+  console.log('specificTeam', specificTeam);
   // Initialize state, dummy default data
-  const [teamInfo, setUpdateTeam] = React.useState({
-    teamName: 'Dummy Data',
-    teamMembers: ['User1', 'User2', 'User3', 'User4'],
-    teamActivities: ['Dummy Event'],
-  });
+  const [teamInfo, setUpdateTeam] = React.useState(...specificTeam);
+  console.log('Current team info state:', teamInfo);
 
-  // UseEffect Testing
-  useEffect(() => {
-    // Double checking current state and updated states
-    if (JSON.stringify(location.state) !== JSON.stringify(teamInfo)) {
-      console.log('Old team info', teamInfo);
-      console.log('New linked data', location.state);
-      // Updating if different with new linked data
-      setUpdateTeam({ ...location.state });
-    }
-  })
 
   // Populate team members + activities
   const teamMembers = teamInfo.teamMembers.map(ele =>
@@ -59,15 +51,22 @@ function TeamInfo(props) {
           // Updates state in TotalTeamDisplay
           // New updating teamActivities propagates down back here
 
+          // Add running
+          // useState => Add running
+          // sync->App.jsx = update state + DB
+          const arrActivities = ['run', 'walk', 'movie', 'party'];
+          const testActvity = arrActivities[Math.floor(Math.random() * arrActivities.length)];
+          const newActivityArr = [...teamInfo.teamActivities].concat(testActvity)
           // Alex:Alex fix this - Fires in App.jsx but no state change yet.
           props.sync([
             {
               team_id: 0,
-              teamName: 'Swap Data?',
+              teamName: 'AAAS Test Long String Title Test',
               teamMembers: ['Ahsunn', 'Aleks', 'Azaa', 'Steeb'],
-              teamActivities: ['Testing initial team'],
+              teamActivities: newActivityArr,
             }
           ])
+          setUpdateTeam({...teamInfo, teamActivities: newActivityArr})
         }
         }>
         Add Activity

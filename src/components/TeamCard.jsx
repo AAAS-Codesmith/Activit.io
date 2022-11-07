@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const TeamCard = (props) => {
   console.log('Teamcard props', props)
-  const testFn = () => console.log('ahhhhh');
   return (
     <div>
       {/* Passing props from 
