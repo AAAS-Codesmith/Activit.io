@@ -10,6 +10,7 @@ const ActivityInfo = (props) => {
   const totalTeamsArr = useContext(TeamsContext);
 
   // Initial state set to current activities props with associated team information
+  // location.state is passed in from ActivityCard = 
   const [currActivity, setCurrActivity] = React.useState(location.state);
   console.log('currActivity props', currActivity);
 
@@ -31,16 +32,31 @@ const ActivityInfo = (props) => {
     navigate('/home');
   }
 
-  // Mapping team members
-  const friendsArr = currActivity.teamMembers.map(name => <li key={name}>{name}</li>);
+  // Price tag
+  //looked through activites and these seem like good breakpoints
+  let price;
+  const activityPrice = currActivity.activity.price
+    if (currActivity.activity.price === 0) price = 'Free!';
+    if (activityPrice > 0 && activityPrice < 0.2) price = '$';
+    if (activityPrice >= 0.2 && activityPrice < 0.4) price = '$$';
+    if (activityPrice >= 0.4 && activityPrice < 0.6) price = '$$$';
+    if (activityPrice >= 0.6 && activityPrice <= 0.8) price = '$$$$';
+
+    // Mapping team members
+    const friendsArr = currActivity.teamMembers.map(name => <li key={name}>{name}</li>);
 
   return (
     <div className='flex-column flex-center activity-info container-card'>
-      <h1>{currActivity.activity}</h1>
-      <div className='flex-column'>
+      <h1>{currActivity.activity.activity}</h1>
+      <h2>Price: {price}</h2>
+      <h2>Type: {currActivity.activity.type}</h2>
+      <div className='flex-column list'>
         <h2>Team: {currActivity.teamName}</h2>
         <h2>People i'm going with</h2>
+        <div className='list'>
         {friendsArr}
+        </div>
+        <div>
         <Link to='/home'>
           <button
             className='button'
@@ -56,6 +72,7 @@ const ActivityInfo = (props) => {
           onClick={deleteActivity} >
           Delete Activity
         </button>
+        </div>
       </div>
     </div>
   )

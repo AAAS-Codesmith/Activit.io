@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import TeamCard from './TeamCard.jsx';
 import { TeamsContext } from '../App.jsx';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,9 @@ function TotalTeamDisplay() {
 
   // Set initial state
   const [totalTeams, setUpdateTeams] = React.useState(teamsContextData);
+
+  // Goals: Update after we render current users info
+  useEffect(() => setUpdateTeams(teamsContextData), [teamsContextData])
 
   // Parse through to create team card displays
   const teamCardDisplay = totalTeams.map(team => {

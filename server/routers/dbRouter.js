@@ -8,7 +8,7 @@ const cors = require('cors');
 // GET routes /////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 // Route to request user data
-router.get('/user/:user_id', dbController.getUserInfo, (req, res) => {
+router.get('/user/:username', dbController.getUserInfo, (req, res) => {
   return res.status(200).json(res.locals.user_info);
 });
 
@@ -24,8 +24,8 @@ router.get('/teaminfo/:team_id', dbController.getTeamInfo, (req, res) => {
 
 // Route to verify user on login
 router.post('/login', dbController.verifyUser, (req, res) => {
-  console.log(' Received response from dbController.verifyUser in dbRouter.js ');
-  console.log('res.locals.response: ',res.locals.login_response)
+  // console.log(' Received response from dbController.verifyUser in dbRouter.js ');
+  // console.log('res.locals.response: ',res.locals.login_response)
   return res.status(200).json({login_success: true});
 });
 
@@ -38,6 +38,10 @@ router.post('/register', dbController.createUser, (req, res) => {
 router.post('/team', dbController.createTeam, dbController.updateUser, (req, res) => {
   return res.status(200).json(res.locals.team_info);
 });
+
+router.post('/addActivity', dbController.addActivity, (req, res) => {
+  return res.status(200).json(res.locals.team);
+})
 
 
 module.exports = router;
