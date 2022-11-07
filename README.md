@@ -1,4 +1,4 @@
-H1 Buddy Buddy Activity Planner
+# Buddy Buddy Activity Planner
 
 Have you ever been bored but can't remember what plans to make or even who to make them with?
 
