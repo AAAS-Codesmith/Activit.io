@@ -1,6 +1,4 @@
-# Placeholder
-
----
+# Activit.io
 
 ## Credits:
 
