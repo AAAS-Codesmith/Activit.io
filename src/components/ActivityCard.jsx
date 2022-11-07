@@ -10,7 +10,7 @@ const ActivityCard = (props) => {
       >
         <button className='button' onClick={console.log('Move to activity')}>
           <div>
-            <h2>{props.activity}</h2>
+            <h2>{props.activity.activity}</h2>
             <p>with {props.teamName}</p>
           </div>
         </button>

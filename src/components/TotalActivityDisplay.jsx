@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import ActivityCard from './ActivityCard.jsx';
 import { TeamsContext } from '../App.jsx';
 
@@ -9,6 +9,9 @@ function TotalActivityDisplay() {
 
   // Setting initial state to everything
   const [totalActivities, setTotalActivities] = React.useState(teamsContextData);
+
+  // Goals: Update after we render current users info
+  useEffect(() => setTotalActivities(teamsContextData), [teamsContextData])
 
   // Parsing out every activity from each team and storing into arr
   const totalActivitiesCards = totalActivities.reduce((totalArr, currTeam) => {

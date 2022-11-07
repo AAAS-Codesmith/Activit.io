@@ -22,10 +22,10 @@ dbController.getUserInfo = (req, res, next) => {
   console.log('\u001b[1;32m dbController.getUserInfo called ');
 
   // Pull out the user_id from the request body
-  const { user_id } = req.params;
+  const { username } = req.params;
 
   // Find the user in the database
-  User.find({ user_id }, (err, user) => {
+  User.find({ username }, (err, user) => {
     // Error handling
     if (err) {
       return next({
@@ -86,23 +86,23 @@ dbController.getTeamInfo = (req, res, next) => {
 
 // Verify user
 dbController.verifyUser = (req, res, next) => {
-  console.log("\n");
-  console.log("\n");
+  // console.log("\n");
+  // console.log("\n");
   // Log to let us know we're in the controller
-  console.log('\u001b[1;32m dbController.verifyUser called ');
+  // console.log('\u001b[1;32m dbController.verifyUser called ');
 
   // Pull out the username and password from the request body
   const { username, password } = req.body;
-  console.log("Received username: " + username + " and password: " + password);
+  // console.log("Received username: " + username + " and password: " + password);
 
   // Find the user in the database
   User.findOne({username:username})
     .then((user) => {
       // Log to let us know the user was found
-      console.log(`\u001b[1:32m User found in database: `);
-      console.group();
-      console.log(user);
-      console.groupEnd();
+      // console.log(`\u001b[1:32m User found in database: `);
+      // console.group();
+      // console.log(user);
+      // console.groupEnd();
 
       // Compare the password to the hashed password
       bcrypt.compare(password, user.password)
@@ -110,9 +110,9 @@ dbController.verifyUser = (req, res, next) => {
           // If the passwords match
           if (result) {
             // Log to let us know the passwords match
-            console.log(`\u001b[1;32m User verified!`);
+            // console.log(`\u001b[1;32m User verified!`);
             res.locals.user_info = user;
-            res.locals.login_response = true;
+            res.locals.login_success = true;
             return next();
           }
           // If the passwords don't match
@@ -184,7 +184,7 @@ dbController.createUser = async (req, res, next) => {
         user_id: randomAlphanumeric,
         username,
         password: hashedPassword,
-        teams: {} 
+        teams: { 'test': 'test' } 
       })
         .then((user) => {
           // Log to let us know the user was saved
@@ -215,8 +215,11 @@ dbController.createTeam = (req, res, next) => {
   // Log to let us know we're in the controller
   console.log('\u001b[1;32m dbController.createTeam called ');
 
+  res.locals.username = req.body.username;
+
   // Pull out the team info from the request body
-  const { team_name, members } = req.body;
+  const { teamName, teamMembers } = req.body;
+  console.log("Received teamName: " + teamName + " and members: " + teamMembers);
 
   // Generate a random teamID for the new team
   const randomAlphanumeric = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -224,15 +227,20 @@ dbController.createTeam = (req, res, next) => {
   // Create a new team object
   Team.create({
     team_id: randomAlphanumeric,
-    team_name,
-    team_members: [members],
+    teamName,
+    teamMembers,
     posts: {},
-    activities: {}
+    activities: [{
+      activity: "Take your dog on a walk",
+      type: "relaxation",
+      price: 0,
+      numParticipants: 1
+    }]
   })
     .then((team) => {
       // Log to let us know the team was saved
       console.log('\u001b[1:32m Team saved to database ');
-      res.locals.team_info = team;
+      res.locals.team = team;
       // Move to the next middleware
       return next();
     })
@@ -253,15 +261,16 @@ dbController.updateUser = (req, res, next) => {
   console.log('\u001b[1;32m dbController.updateUser called ');
 
   // Pull out the team_id and name from res.locals.team_info
-  console.log(res.locals.team_info.team_id);
-  const team_id = res.locals.team_info.team_id;
-  const { team_name } = res.locals.team_info;
+  console.log(res.locals.team.team_id);
+  const team_id = res.locals.team.team_id;
+  const teamName = res.locals.team.teamName;
 
   // Pull out the user_id from the request body
-  const { user_id } = req.body.user_id;
+  const username = res.locals.username;
+  console.log("Received username: " + username);
 
   // Find the user in the DB and insert the team_id into the teams object
-  User.findOneAndUpdate(user_id, { $set: { [`teams.${team_id}`]: team_name } })
+  User.findOneAndUpdate({"username": username} , { $set: { [`teams.${team_id}`]: teamName } })
     .then((user) => {
       // Log to let us know the user was updated
       console.log(`\u001b[1:32m User updated in database with return of : `);
@@ -277,6 +286,40 @@ dbController.updateUser = (req, res, next) => {
       })
     })
 };
+
+// Update a team's information with a new activity
+dbController.addActivity = (req, res, next) => {
+  console.log("\n");
+  console.log("\n");
+  // Log to let us know we're in the controller
+  console.log('\u001b[1;32m dbController.addActivity called ');
+  console.log('Req body', req.body)
+  // Pull out the team_id from res.locals.team_id and the activity info from res.locals.activity
+  const team_id = req.body.team_id;
+  console.log("Received team_id: " + team_id);
+  const activity = req.body.activity;
+  
+    //     "activity": "Take your dog on a walk",
+    //     "type": "relaxation",
+    //     "participants": 1,
+    //     "price": 0,
+  // Find the team in the DB and insert the activity object into its activities array
+  Team.updateOne({ "team_id": team_id }, { $push: { 'teamActivities': activity} })
+    .then((team) => {
+      // Log to let us know the team was updated
+      console.log(`\u001b[1:32m Team updated in database with return of : `);
+      console.log(team);
+      res.locals.team_info = team;
+      return next();
+    })
+    .catch((err) => {
+      // Error handling
+      return next({
+        log: `Error in dbController.addActivity: ${err}`,
+        message: { err: 'Error occurred in dbController.addActivity.' },
+      })
+    })
+}
 
 
 

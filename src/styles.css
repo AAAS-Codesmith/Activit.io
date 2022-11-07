@@ -53,7 +53,10 @@ body {
   min-height: 55px;
 }
 
-
+.button:active {
+  background-color: rgb(84, 184, 184) !important;
+  transition: 0s!important;
+}
 
 .card-button:hover, .button:hover{
   background-color: var(--rose-fuschia);
@@ -135,6 +138,10 @@ body {
   background-size: cover;
   background-position: center;
   
+}
+
+.list {
+  margin-bottom: 12px;
 }
 
 
