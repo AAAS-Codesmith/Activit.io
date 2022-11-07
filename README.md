@@ -1,4 +1,5 @@
-# Placeholder
+## H2 Wonderpuss Photogenicus presents...
+# H1 Buddy Buddy Planner Planner
 
 Activity Generator: Figure out what to do with your friends!
 
