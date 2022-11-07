@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 
 const TeamCard = (props) => {
   console.log('Teamcard props', props)
-  const testFn = () => console.log('ahhhhh');
+  // Assemble names into a string
+  const members = props.teamMembers.reduce((team, member) => `${team}, ${member}`)
+
   return (
     <div>
       {/* Passing props from 
@@ -17,8 +19,8 @@ const TeamCard = (props) => {
         <button className='card-button button-hover' onClick={(e) => {
           console.log('Going to ', props.teamName, ' info');
         }}>
-          <p>Team: {props.teamName}</p>
-          <p>Members: {props.teamMembers.length}</p>
+          <h2>{props.teamName}</h2>
+          <p>ft. {members}</p>
         </button>
       </Link>
     </div >
