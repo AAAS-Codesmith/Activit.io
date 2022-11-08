@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-
+// Testing Alex Commit
 // app.use('/api', (req, res) => res.json('Hello Team Wonderpuss Photogenicus!'));
 
 app.use('/api/activity', boredRouter)
