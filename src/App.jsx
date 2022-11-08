@@ -3,6 +3,7 @@ import React, { useEffect, createContext } from 'react';
 
 import LoginPage from './containers/LoginPage.jsx';
 import HomeButton from './components/HomeButton.jsx';
+import SignoutButton from "./components/SignoutButton.jsx";
 import Home from './containers/Home.jsx';
 import CreateTeam from './containers/CreateTeam.jsx';
 import TeamInfo from './containers/TeamInfo.jsx';
@@ -75,7 +76,10 @@ function App() {
   return (
     <TeamsContext.Provider value={userData}>
       <div className='main-app flex-column flex-center'>
-        <HomeButton />
+        <div id='navbar'>
+          <HomeButton />
+          <SignoutButton />
+        </div>
         <Routes>
           <Route path='/' element={<LoginPage setUser={syncUser}/>} />
           <Route path='/home' element={<Home />} />

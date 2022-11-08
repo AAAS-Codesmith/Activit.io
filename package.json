@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open\" \"cross-env NODE_ENV=development nodemon server/server.js\"",
+    "start": "concurrently \"cross-env NODE_ENV=development webpack-dev-server\" \"cross-env NODE_ENV=development nodemon server/server.js\"",
     "backend": "cross-env NODE_ENV=development nodemon server/server.js",
     "frontend": "cross-env NODE_ENV=development webpack-dev-server --open"
   },
@@ -32,6 +32,7 @@
     "nodemon": "^2.0.20",
     "pg": "^8.8.0",
     "react": "^18.2.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-router": "^6.4.3",
     "react-router-dom": "^6.4.3",
@@ -46,6 +47,7 @@
     "css-loader": "^6.7.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "react-cookie": "^4.1.1",
     "style-loader": "^3.3.1",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
