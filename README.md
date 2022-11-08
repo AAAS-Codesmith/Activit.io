@@ -1,18 +1,18 @@
-# Activit.io
+# Activit.io - Iteration
 
 ## Credits:
 
-Ahsan Ali
-:(https://github.com/greyali)
+James Howat
+:(https://github.com/jbhowat)
+
+Harvey Li
+:(https://github.com/harvli)
 
 Alexander Tu
 :(https://github.com/atu816)
 
-Azal Adeel
-:(https://github.com/azaladeel)
-
-Steven Geist
-:(https://github.com/geistnine)
+John Wroge
+:(https://github.com/johnwroge)
 
 
 [For API calls:] (http://www.boredapi.com/api/activity/)
