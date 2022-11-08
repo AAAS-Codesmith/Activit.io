@@ -11,6 +11,7 @@ router.get('/type/:key', boredController.getType,(req,res) => {
 router.get('/people/:number', boredController.getPeople,(req,res) => {
     res.status(200).json(res.locals.info)
 })
+
 // router.get('/money/:price',boredController.getType,(req,res) => {
 //     res.status(200).send()
 // })
