@@ -185,7 +185,7 @@ dbController.createUser = async (req, res, next) => {
         user_id: randomAlphanumeric,
         username,
         password: hashedPassword,
-        teams: { team: req.params.team_id },
+        // teams: { team: req.params.team_id },
       })
         .then((user) => {
           // Log to let us know the user was saved

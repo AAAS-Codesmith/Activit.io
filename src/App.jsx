@@ -8,7 +8,7 @@ import CreateTeam from "./containers/CreateTeam.jsx";
 import TeamInfo from "./containers/TeamInfo.jsx";
 import ActivityInfo from "./containers/ActivityInfo.jsx";
 
-export const TeamsContext = React.createContext(null);
+export const TeamsContext = React.createContext({});
 
 function App() {
   const location = useLocation();
