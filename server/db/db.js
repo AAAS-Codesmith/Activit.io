@@ -27,4 +27,3 @@ db.on('error', console.error.bind(console, '\u001b[1;31m MongoDB connection erro
 
 // Export db
 module.exports = db;
-
