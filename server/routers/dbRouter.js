@@ -39,6 +39,7 @@ router.post('/team', dbController.createTeam, dbController.updateUser, (req, res
   return res.status(200).json(res.locals.team_info);
 });
 
+// Route to add activity to the database
 router.post('/addActivity', dbController.addActivity, (req, res) => {
   return res.status(200).json(res.locals.team);
 })

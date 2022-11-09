@@ -1,5 +1,5 @@
 // Import mongoose
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Define schema
 const Schema = mongoose.Schema;
@@ -16,15 +16,15 @@ const TeamModel = new Schema({
   teamActivities: [
     {
       activity: { type: String, required: true },
-      type: {type: String, required: true },
+      type: { type: String, required: true },
       price: { type: Number, required: true },
       participants: { type: Number, required: true },
     },
-  ]
+  ],
 });
 
 // Compile model from schema
-const Team = mongoose.model('Team', TeamModel);
+const Team = mongoose.model("Team", TeamModel);
 
 // Export model
 module.exports = Team;

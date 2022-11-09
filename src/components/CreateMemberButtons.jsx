@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 /*
 Bugs
 When you hit 'Add Team Member' - it triggers createTeam()
