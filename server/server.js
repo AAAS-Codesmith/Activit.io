@@ -5,18 +5,19 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const boredRouter = require('./routers/boredRouter.js')
 const dbRouter = require('./routers/dbRouter.js');
+
+// Server parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// Testing Alex Commit
-// app.use('/api', (req, res) => res.json('Hello Team Wonderpuss Photogenicus!'));
 
-app.use('/api/activity', boredRouter)
+app.use('/api/activity', boredRouter);
+
 
 app.use('/db', dbRouter);
 
-// Catch all to redirect back to index.html
+// Catch all to redirect back to index.html (Login page)
 app.use('*', (req, res) => res.redirect('/'));
 
 // Global error handler

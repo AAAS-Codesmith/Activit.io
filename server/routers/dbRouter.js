@@ -4,28 +4,22 @@ const router = express.Router();
 const cors = require('cors');
 // Figure out what sort of get requests may be necessary
 
-///////////////////////////////////////////////////////////////////////////////
-// GET routes /////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// Route to request user data
+
+//// GET routes ////
+// Route to request/return user data
 router.get('/user/:username', dbController.getUserInfo, (req, res) => {
   return res.status(200).json(res.locals.user_info);
 });
 
-// Route to get specific team's information
+// Route to get/return specific team's information
 router.get('/teaminfo/:team_id', dbController.getTeamInfo, (req, res) => {
   return res.status(200).json(res.locals.team_info);
 });
 
 
-///////////////////////////////////////////////////////////////////////////////
-// POST routes ////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-// Route to verify user on login
+//// POST routes ////
+// Route to verify user on login/return boolean
 router.post('/login', dbController.verifyUser, (req, res) => {
-  // console.log(' Received response from dbController.verifyUser in dbRouter.js ');
-  // console.log('res.locals.response: ',res.locals.login_response)
   return res.status(200).json({login_success: true});
 });
 
@@ -39,10 +33,17 @@ router.post('/team', dbController.createTeam, dbController.updateUser, (req, res
   return res.status(200).json(res.locals.team_info);
 });
 
+// Route to add activity to a specific team
 router.post('/addActivity', dbController.addActivity, (req, res) => {
   return res.status(200).json(res.locals.team);
 })
 
+//// PUT routes ////
+// Goals: Change current activity
+// Check in frontend on what data type/edits they'll be sending
+
+//// DELETE routes ////
+// Goals: Add delete for activities and accounts
 
 
 
