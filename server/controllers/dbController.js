@@ -1,11 +1,13 @@
 const dbController = {};
-const Team = require('../db/mongo/TeamModel.js');
-const User = require('../db/mongo/UserModel.js');
-const mongoose = require('mongoose');
-const db = require('../db/db.js');
-const bcrypt = require('bcrypt');
-const path = require('path');
-require('dotenv').config({path: path.resolve(__dirname, '../../process.env')});
+const Team = require("../db/mongo/TeamModel.js");
+const User = require("../db/mongo/UserModel.js");
+const mongoose = require("mongoose");
+const db = require("../db/db.js");
+const bcrypt = require("bcrypt");
+const path = require("path");
+require("dotenv").config({
+  path: path.resolve(__dirname, "../../process.env"),
+});
 const saltRounds = process.env.SALT_ROUNDS || 10;
 
 // Access DB and return requested information
@@ -19,7 +21,7 @@ dbController.getUserInfo = (req, res, next) => {
   console.log("\n");
   console.log("\n");
   // Log to let us know we're in the controller
-  console.log('\u001b[1;32m dbController.getUserInfo called ');
+  console.log("\u001b[1;32m dbController.getUserInfo called ");
 
   // Pull out the user_id from the request body
   const { username } = req.params;
@@ -30,7 +32,7 @@ dbController.getUserInfo = (req, res, next) => {
     if (err) {
       return next({
         log: `Error in dbController.getUserInfo: ${err}`,
-        message: { err: 'Error occurred in dbController.getUserInfo.' },
+        message: { err: "Error occurred in dbController.getUserInfo." },
       });
     }
     // Log to let us know the user was found
@@ -52,7 +54,7 @@ dbController.getTeamInfo = (req, res, next) => {
   console.log("\n");
   console.log("\n");
   // Log to let us know we're in the controller
-  console.log('\u001b[1;32m dbController.getTeamInfo called ');
+  console.log("\u001b[1;32m dbController.getTeamInfo called ");
 
   // Pull out the team_id from the request body
   const { team_id } = req.params;
@@ -63,7 +65,7 @@ dbController.getTeamInfo = (req, res, next) => {
     if (err) {
       return next({
         log: `Error in dbController.getTeamInfo: ${err}`,
-        message: { err: 'Error occurred in dbController.getTeamInfo.' },
+        message: { err: "Error occurred in dbController.getTeamInfo." },
       });
     }
     // Log to let us know the team was found
@@ -78,7 +80,6 @@ dbController.getTeamInfo = (req, res, next) => {
     return next();
   });
 };
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // POST Controllers ///////////////////////////////////////////////////////////
@@ -96,7 +97,7 @@ dbController.verifyUser = (req, res, next) => {
   // console.log("Received username: " + username + " and password: " + password);
 
   // Find the user in the database
-  User.findOne({username:username})
+  User.findOne({ username: username })
     .then((user) => {
       // Log to let us know the user was found
       // console.log(`\u001b[1:32m User found in database: `);
@@ -105,7 +106,8 @@ dbController.verifyUser = (req, res, next) => {
       // console.groupEnd();
 
       // Compare the password to the hashed password
-      bcrypt.compare(password, user.password)
+      bcrypt
+        .compare(password, user.password)
         .then((result) => {
           // If the passwords match
           if (result) {
@@ -119,55 +121,52 @@ dbController.verifyUser = (req, res, next) => {
           else {
             return next({
               log: `Error in dbController.verifyUser: Passwords don't match`,
-              message: { err: 'Error occurred in dbController.verifyUser.' },
+              message: { err: "Error occurred in dbController.verifyUser." },
             });
           }
         })
         .catch((err) => {
           return next({
             log: `Error in dbController.verifyUser: ${err}`,
-            message: { err: 'Error occurred in dbController.verifyUser.' },
+            message: { err: "Error occurred in dbController.verifyUser." },
           });
         });
     })
     .catch((err) => {
       return next({
         log: `Error in dbController.verifyUser: ${err}`,
-        message: { err: 'Error occurred in dbController.verifyUser.' },
+        message: { err: "Error occurred in dbController.verifyUser." },
       });
     });
 };
 
-
 // Create a new User
 dbController.createUser = async (req, res, next) => {
   console.log("\n");
-  console.log("\n");
   // Log to let us know we're in the controller
-  console.log('\u001b[1;32m dbController.createUser called ');
+  console.log("\u001b[1;32m dbController.createUser called ");
 
   // Pull out the user info from the request body
   const { username, password } = req.body;
   console.log("Received username: " + username + " and password: " + password);
 
   // Ensure the username is unique
-  User.findOne({username}, (err, user) => {
+  User.findOne({ username }, (err, user) => {
     // Error handling
     if (err) {
       return next({
         log: `Error in dbController.createUser: ${err}`,
-        message: { err: 'Error occurred in dbController.createUser.' },
+        message: { err: "Error occurred in dbController.createUser." },
       });
     }
-    if(user) {
+    if (user) {
       // Log to let us know the user was found
       return next({
         log: `Error in dbController.createUser: Username already exists`,
-        message: { err: 'Error occurred in dbController.createUser.' },
+        message: { err: "Error occurred in dbController.createUser." },
       });
-      throw new Error('Username already exists');
-    }
-    else {
+      throw new Error("Username already exists");
+    } else {
       // Log to let us know the user was not found
       console.log(`\u001b[1:32m Username does not exist `);
       // Hash the password
@@ -176,19 +175,21 @@ dbController.createUser = async (req, res, next) => {
       console.log(typeof hashedPassword);
 
       // Generate a random userID for the new user
-      const randomAlphanumeric = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      const randomAlphanumeric =
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15);
 
       // Create a new user object
-      console.log('creating user');
+      console.log("creating user");
       User.create({
         user_id: randomAlphanumeric,
         username,
         password: hashedPassword,
-        teams: { 'test': 'test' } 
+        // teams: { team: req.params.team_id },
       })
         .then((user) => {
           // Log to let us know the user was saved
-          console.log('\u001b[1:32m User saved to database: ');
+          console.log("\u001b[1:32m User saved to database: ");
           console.group();
           console.log(user);
           console.groupEnd();
@@ -201,7 +202,7 @@ dbController.createUser = async (req, res, next) => {
           // Error handling
           return next({
             log: `Error in dbController.createUser: ${err}`,
-            message: { err: 'Error occurred in dbController.createUser.' },
+            message: { err: "Error occurred in dbController.createUser." },
           });
         });
     }
@@ -213,16 +214,20 @@ dbController.createTeam = (req, res, next) => {
   console.log("\n");
   console.log("\n");
   // Log to let us know we're in the controller
-  console.log('\u001b[1;32m dbController.createTeam called ');
+  console.log("\u001b[1;32m dbController.createTeam called ");
 
   res.locals.username = req.body.username;
 
   // Pull out the team info from the request body
   const { teamName, teamMembers } = req.body;
-  console.log("Received teamName: " + teamName + " and members: " + teamMembers);
+  console.log(
+    "Received teamName: " + teamName + " and members: " + teamMembers
+  );
 
   // Generate a random teamID for the new team
-  const randomAlphanumeric = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  const randomAlphanumeric =
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15);
 
   // Create a new team object
   Team.create({
@@ -230,16 +235,18 @@ dbController.createTeam = (req, res, next) => {
     teamName,
     teamMembers,
     posts: {},
-    activities: [{
-      activity: "Take your dog on a walk",
-      type: "relaxation",
-      price: 0,
-      numParticipants: 1
-    }]
+    activities: [
+      {
+        activity: "Take your dog on a walk",
+        type: "relaxation",
+        price: 0,
+        numParticipants: 1,
+      },
+    ],
   })
     .then((team) => {
       // Log to let us know the team was saved
-      console.log('\u001b[1:32m Team saved to database ');
+      console.log("\u001b[1:32m Team saved to database ");
       res.locals.team = team;
       // Move to the next middleware
       return next();
@@ -248,9 +255,9 @@ dbController.createTeam = (req, res, next) => {
       // Error handling
       return next({
         log: `Error in dbController.createTeam: ${err}`,
-        message: { err: 'Error occurred in dbController.createTeam.' },
+        message: { err: "Error occurred in dbController.createTeam." },
       });
-    })
+    });
 };
 
 // Update a user's information
@@ -258,7 +265,7 @@ dbController.updateUser = (req, res, next) => {
   console.log("\n");
   console.log("\n");
   // Log to let us know we're in the controller
-  console.log('\u001b[1;32m dbController.updateUser called ');
+  console.log("\u001b[1;32m dbController.updateUser called ");
 
   // Pull out the team_id and name from res.locals.team_info
   console.log(res.locals.team.team_id);
@@ -270,7 +277,10 @@ dbController.updateUser = (req, res, next) => {
   console.log("Received username: " + username);
 
   // Find the user in the DB and insert the team_id into the teams object
-  User.findOneAndUpdate({"username": username} , { $set: { [`teams.${team_id}`]: teamName } })
+  User.findOneAndUpdate(
+    { username: username },
+    { $set: { [`teams.${team_id}`]: teamName } }
+  )
     .then((user) => {
       // Log to let us know the user was updated
       console.log(`\u001b[1:32m User updated in database with return of : `);
@@ -282,9 +292,9 @@ dbController.updateUser = (req, res, next) => {
       // Error handling
       return next({
         log: `Error in dbController.updateUser: ${err}`,
-        message: { err: 'Error occurred in dbController.updateUser.' },
-      })
-    })
+        message: { err: "Error occurred in dbController.updateUser." },
+      });
+    });
 };
 
 // Update a team's information with a new activity
@@ -292,19 +302,19 @@ dbController.addActivity = (req, res, next) => {
   console.log("\n");
   console.log("\n");
   // Log to let us know we're in the controller
-  console.log('\u001b[1;32m dbController.addActivity called ');
-  console.log('Req body', req.body)
+  console.log("\u001b[1;32m dbController.addActivity called ");
+  console.log("Req body", req.body);
   // Pull out the team_id from res.locals.team_id and the activity info from res.locals.activity
   const team_id = req.body.team_id;
   console.log("Received team_id: " + team_id);
   const activity = req.body.activity;
-  
-    //     "activity": "Take your dog on a walk",
-    //     "type": "relaxation",
-    //     "participants": 1,
-    //     "price": 0,
+
+  //     "activity": "Take your dog on a walk",
+  //     "type": "relaxation",
+  //     "participants": 1,
+  //     "price": 0,
   // Find the team in the DB and insert the activity object into its activities array
-  Team.updateOne({ "team_id": team_id }, { $push: { 'teamActivities': activity} })
+  Team.updateOne({ team_id: team_id }, { $push: { teamActivities: activity } })
     .then((team) => {
       // Log to let us know the team was updated
       console.log(`\u001b[1:32m Team updated in database with return of : `);
@@ -316,11 +326,9 @@ dbController.addActivity = (req, res, next) => {
       // Error handling
       return next({
         log: `Error in dbController.addActivity: ${err}`,
-        message: { err: 'Error occurred in dbController.addActivity.' },
-      })
-    })
-}
-
-
+        message: { err: "Error occurred in dbController.addActivity." },
+      });
+    });
+};
 
 module.exports = dbController;
