@@ -22,11 +22,18 @@ Steven Geist
 ## Iteration Group:
 
 git commit -m "your commit message here
+
 <hit enter 3 times>
+
 Co-authored-by: Ruqayaah Sabitu <49168086+ruqayaahh@users.noreply.github.com>
+
 Co-authored-by: Tiffany Chau <102318022+tiffanynchau@users.noreply.github.com>
+
 Co-authored-by: Erik Stynchula <110676583+EStynch@users.noreply.github.com>
+
 Co-authored-by: Elise McConnell <112969060+enmcco@users.noreply.github.com>"
+
+
 ## Motivations
 
 A not so long time ago, in a galaxy very very close, a group of friends were bored out of their minds. They were looking for something to do, but they couldn't think of anything that interested them. They wished that they could find a magical genie's lamp to grant them the wish of knowing what to do. But alas, they were not so lucky. They decided to make their own genie's lamp, and that's how this project was born. 
