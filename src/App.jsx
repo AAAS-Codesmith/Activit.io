@@ -52,15 +52,12 @@ function App() {
       const fetchedTeams = [];
       // object.values
       console.log("data: ", data);
-      console.log("TeamName:", Object.values(data[0].teams)[0]);
       for (let team_id of Object.keys(data[0].teams)) {
         // console.log('team_id:', team_id);
         const teamInfo = await fetch(`/db/teaminfo/${team_id}`);
         const teamData = await teamInfo.json();
-        console.log("teamData: ", teamData);
         fetchedTeams.push(teamData);
       }
-      console.log("fetchedTeams:", fetchedTeams);
 
       const arrOfFetchedTeams = fetchedTeams.map((arrObj) => arrObj[0]);
       console.log("arr of team objs", arrOfFetchedTeams);
