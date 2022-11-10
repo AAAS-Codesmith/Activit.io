@@ -1,12 +1,31 @@
 import React from "react";
+import {
+  MDBFooter,
+  MDBContainer,
+  MDBCol,
+  MDBRow,
+  MDBIcon,
+  MDBBtn,
+} from "mdb-react-ui-kit";
 
-function Footer(props) {
+function Footer() {
   return (
-    <div className="footer">
-      <p className="ft-btn">Contact Us</p>
-      <p className="ft-btn">Report a problem</p>
-      <p className="ft-btn">FAQ</p>
-    </div>
+    <MDBFooter
+      className="text-center text-white"
+      style={{ backgroundColor: "#ffffff" }}
+    >
+      <MDBContainer className="p-4"></MDBContainer>
+      <MDBIcon icon="camera-retro" />
+      <div
+        className="text-center p-3 text-white"
+        style={{ backgroundColor: "#079057" }}
+      >
+        © 2022 Copyright:
+        <a className="text-white" href="#">
+          Activ-8
+        </a>
+      </div>
+    </MDBFooter>
   );
 }
 

@@ -3,6 +3,7 @@ import LoginButtons from "../components/LoginButtons.jsx";
 import RegisterButtons from "../components/RegisterButtons.jsx";
 import LogIn from "../components/LogIn.jsx";
 import Register from "../components/Register.jsx";
+import NavBar from "../components/NavBar.jsx";
 import axios, { AxiosHeaders } from "axios";
 
 const LoginPage = (props) => {

@@ -5,8 +5,9 @@ import TotalActivityDisplay from "../components/TotalActivityDisplay.jsx";
 function Home() {
   return (
     <div className="flex-column flex-center home ">
-      <h1>Create Your Team!</h1>
+      <h1>Welcome to Activ-8</h1>
       <TotalTeamDisplay />
+      <hr></hr>
       <h1>Generate A Random Activity!</h1>
       <TotalActivityDisplay />
     </div>

@@ -9,7 +9,7 @@ function UserInfoButton() {
       <div className="user-button">
         <Link to="/userprofile" className="user-button-link">
           <button
-            className="user-button button"
+            className="user-button"
             onClick={() => {
               console.log("Clicking user-button button");
             }}

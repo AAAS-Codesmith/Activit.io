@@ -9,6 +9,8 @@ import Home from "./containers/Home.jsx";
 import CreateTeam from "./containers/CreateTeam.jsx";
 import TeamInfo from "./containers/TeamInfo.jsx";
 import ActivityInfo from "./containers/ActivityInfo.jsx";
+import NavBar from "./components/NavBar.jsx";
+import Footer from "./components/Footer.jsx";
 
 export const TeamsContext = React.createContext({});
 export const UserProfileContext = React.createContext({});
@@ -71,9 +73,12 @@ function App() {
 
   return (
     <TeamsContext.Provider value={userData}>
+      <div>
+        <NavBar />
+      </div>
       <div className="main-app flex-column flex-center">
-        <HomeButton />
-        <UserProfileButton />
+        {/* <HomeButton />
+        <UserProfileButton /> */}
         <Routes>
           <Route path="/" element={<LoginPage setUser={syncUser} />} />
           <Route path="/home" element={<Home />} />
@@ -96,6 +101,7 @@ function App() {
           </Routes>
         </UserProfileContext.Provider>
       </div>
+      <Footer />
     </TeamsContext.Provider>
   );
 }
