@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Cabin&family=Quicksand&display=swap");
 
-:root {
+/* :root {
   --rainbow-gradient-image: linear-gradient(
     to bottom right,
     #b827fc 0%,
@@ -11,19 +11,29 @@
   );
   --cr-yellow: #ffed85;
   --rose-fuschia: #bf4371;
-  --navy-purple: #524d94;
-}
+  --navy-purple: #90b6e9;
+} */
 
 * {
-  font-family: "Arial", sans-serif;
+  font-family: "Quicksand", sans-serif;
+  color: #1a1919;
 }
 
 body {
-  background-color: rgb(40, 18, 51);
-  color: rgb(224, 224, 224);
+  background-color: #fbe7d3;
+  color: rgb(61, 59, 59);
   font-family: "Quicksand", sans-serif;
   margin: 0 auto;
   animation: 1s ease-out 0s 1 appear;
+}
+
+h1 {
+  font-size: 5vw;
+  text-align: center;
+}
+
+.total-team-display {
+  background-color: #f8ce8e;
 }
 
 #test {
@@ -50,13 +60,14 @@ body {
 }
 
 .button {
-  background-color: gold;
+  background-color: #52b0aa;
   padding: 6px;
   border: 5px solid transparent;
   border-radius: 5px;
   margin: 3px;
   min-width: 120px;
   min-height: 55px;
+  font-size: 2vw;
 }
 
 .button:active {
@@ -66,7 +77,7 @@ body {
 
 .card-button:hover,
 .button:hover {
-  background-color: var(--rose-fuschia);
+  background-color: #ff8884;
   box-shadow: 0 0 4px 4px rgb(250, 84, 175);
   transition: 0.7s;
 }
@@ -74,7 +85,7 @@ body {
 .home-button {
   position: sticky;
   top: 0;
-  background-color: gold;
+  background-color: #bed8cf;
   min-height: 100px;
   min-width: 150px;
   font-size: 20px;
@@ -89,7 +100,7 @@ body {
   width: 100%;
   border: 5px solid transparent;
   margin: 2px 0px 2px 0px;
-  background-color: #331c34;
+  background-color: #963f2d;
   color: rgb(219, 219, 219);
 }
 
@@ -125,28 +136,39 @@ body {
   background-color: var(--navy-purple);
   width: 70%;
   padding: 16px;
-  border: 5px solid;
-  border-image: var(--rainbow-gradient-image);
+  border: 3px solid;
+  /* border-image: var(--rainbow-gradient-image); */
   border-image-slice: 1;
   border-radius: 2px;
   margin: 24px;
-  box-shadow: 8px 8px 4px 3px rgb(75, 47, 75);
+  /* box-shadow: 8px 8px 4px 3px rgb(75, 47, 75); */
   animation: 0.75s ease-out 0s 0.75 appear;
 }
 .login-page {
   width: 40%;
-  box-shadow: 8px 8px 4px 3px rgb(37, 28, 37);
+  /* box-shadow: 8px 8px 4px 3px rgb(37, 28, 37); */
+  border-radius: 25px;
 }
 .login-page-container {
   height: 100vh;
   width: 100vw;
-  background-image: url("https://images.unsplash.com/photo-1566737236500-c8ac43014a67?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
-  background-size: cover;
+  /* background-image: url("https://images.unsplash.com/photo-1566737236500-c8ac43014a67?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
+  background-size: cover; */
   background-position: center;
 }
 
 .list {
   margin-bottom: 12px;
+}
+
+.welcome-to-activ8 {
+  font-family: "Permanent Marker", cursive;
+  font-size: 50px;
+  text-align: center;
+}
+
+.user-profile {
+  text-align: center;
 }
 
 @keyframes appear {

@@ -1,14 +1,17 @@
-import { Routes, Route, useLocation } from "react-router-dom";
-import React, { useEffect, createContext } from "react";
+import { Routes, Route, useLocation, Link } from "react-router-dom";
+import React, { useEffect, createContext, useContext } from "react";
 
 import LoginPage from "./containers/LoginPage.jsx";
 import HomeButton from "./components/HomeButton.jsx";
+import UserProfile from "./containers/UserProfile.jsx";
+import UserProfileButton from "./components/UserProfileButton.jsx";
 import Home from "./containers/Home.jsx";
 import CreateTeam from "./containers/CreateTeam.jsx";
 import TeamInfo from "./containers/TeamInfo.jsx";
 import ActivityInfo from "./containers/ActivityInfo.jsx";
 
 export const TeamsContext = React.createContext({});
+export const UserProfileContext = React.createContext({});
 
 function App() {
   const location = useLocation();
@@ -70,6 +73,7 @@ function App() {
     <TeamsContext.Provider value={userData}>
       <div className="main-app flex-column flex-center">
         <HomeButton />
+        <UserProfileButton />
         <Routes>
           <Route path="/" element={<LoginPage setUser={syncUser} />} />
           <Route path="/home" element={<Home />} />
@@ -83,6 +87,14 @@ function App() {
             element={<ActivityInfo sync={syncStatetoDB} />}
           />
         </Routes>
+      </div>
+      <div>
+        {/* added to try and have our user info button show and work on the home page */}
+        <UserProfileContext.Provider value={userData}>
+          <Routes>
+            <Route path="/userprofile" element={<UserProfile />} />
+          </Routes>
+        </UserProfileContext.Provider>
       </div>
     </TeamsContext.Provider>
   );
