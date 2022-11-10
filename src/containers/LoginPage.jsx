@@ -83,7 +83,7 @@ const LoginPage = (props) => {
       style={{ alignItems: "center" }}
     >
       <div className="login-page flex-column flex-center container-card">
-        <h1 className="welcome-to-activ8">Welcome to Activ8</h1>
+        <h1 className="welcome-to-activ8">Welcome to Activ-8</h1>
         {greeting}
         <form className="form" onSubmit={handleSubmit}>
           <p>

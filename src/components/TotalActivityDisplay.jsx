@@ -33,7 +33,7 @@ function TotalActivityDisplay() {
 
   return (
     <div className="total-activity-display flex-column flex-center container-card">
-      <h1>Total Activity Display</h1>
+      <h1>Your Activities</h1>
       {totalActivitiesCards.length ? (
         totalActivitiesCards
       ) : (
