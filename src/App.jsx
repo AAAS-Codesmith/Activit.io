@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation, Link } from "react-router-dom";
-import React, { useEffect, createContext, useContext } from "react";
+import React, { useEffect, createContext, useContext, useState } from "react";
 
 import LoginPage from "./containers/LoginPage.jsx";
 import HomeButton from "./components/HomeButton.jsx";
@@ -13,21 +13,21 @@ import NavBar from "./components/NavBar.jsx";
 import Footer from "./components/Footer.jsx";
 
 export const TeamsContext = React.createContext({});
-export const UserProfileContext = React.createContext({});
+// export const UserProfileContext = React.createContext({});
 
 function App() {
   const location = useLocation();
-  console.log("location state - username:", location.state);
+  console.log("location state - username:", location);
   // Initialize state to be array of teams w/associated activities
-  const [userData, setUserData] = React.useState([]);
-  const [currentUser, setCurrentUser] = React.useState(location.state); //username of the user
+  const [userData, setUserData] = useState([]);
+  const [currentUser, setCurrentUser] = useState(location.state); //username of the user
 
   // Goal: Pass setUserData to be invoked with fetched data anytime new data is created
   function syncStatetoDB(data) {
     // console.log("Updating state with DB change");
     setUserData(data);
   }
-
+console.log(userData, 'userData inside App component')
   // useEffect(() => {
   //   const asyncFn = async () => {
   //     const fetchedUserTeams = await fetch(`/db/user/${currentUser}`);
@@ -55,7 +55,7 @@ function App() {
         {/* <HomeButton />
         <UserProfileButton /> */}
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<LoginPage setUserData={setUserData}/>} />
           <Route path="/home" element={<Home />} />
           <Route
             path="/createTeam"
@@ -66,17 +66,12 @@ function App() {
             path="/activities"
             element={<ActivityInfo sync={syncStatetoDB} />}
           />
+            <Route path="/userprofile" element={<UserProfile />} />
         </Routes>
       </div>
       <div>
-        {/* added to try and have our user info button show and work on the home page */}
-        <UserProfileContext.Provider value={userData}>
-          <Routes>
-            <Route path="/userprofile" element={<UserProfile />} />
-          </Routes>
-        </UserProfileContext.Provider>
+        <Footer />
       </div>
-      <Footer />
     </TeamsContext.Provider>
   );
 }

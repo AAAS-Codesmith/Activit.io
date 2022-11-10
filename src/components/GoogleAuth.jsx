@@ -73,7 +73,6 @@ export default function GoogleAuth() {
         clientId={clientId}
         buttonText="Signup/Login with Google"
         onSuccess={onSuccess}
-        onFailure={onFailure}
         cookiePolicy={"single_host_origin"}
         isSignedIn={false} //will call onSuccess callback on load to keep the user signed in.
       />

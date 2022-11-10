@@ -15,7 +15,7 @@ function TotalTeamDisplay() {
   useEffect(() => setUpdateTeams(teamsContextData), [teamsContextData]);
 
   // Parse through to create team card displays
-  const teamCardDisplay = totalTeams.map((team) => {
+  const teamCardDisplay = totalTeams.teams.map((team) => {
     return (
       <div>
         {team ? (

@@ -4,7 +4,7 @@ import RegisterButtons from "../components/RegisterButtons.jsx";
 import GoogleAuth from "../components/GoogleAuth.jsx";
 import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+const LoginPage = ({setUserData}) => {
   const navigate = useNavigate();
   const [accountCreation, setAccountCreation] = useState(false);
   // const [resgister, setRegister] = useState(false);
@@ -49,7 +49,8 @@ const LoginPage = () => {
       })
       .then((response) => {
         console.log(response, "response");
-        return navigate("/home", { state: response.user_info });
+        setUserData(response.user_info)
+        return navigate("/home");
       })
       .catch((error) => console.log(error));
   }
@@ -72,7 +73,13 @@ const LoginPage = () => {
       })
       .then((response) => {
         console.log(response, "login response");
-        return navigate("/home", { state: response.user_info });
+        setUserData({...response.user_info, teams: [ {team_id: "xxxxxxxxx",teamName: "Activ-8", teamMembers: ['rest', 'graph', 'somemore'], activities: [ {
+          activity: "Take your dog on a walk",
+          type: "relaxation",
+          price: 0,
+          participants: 1,
+        }]}] })
+        return navigate("/home");
       })
       .catch((err) => {
         console.error("Error: ", err);
@@ -84,6 +91,8 @@ const LoginPage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log('name', name);
+    console.log('value', value);
     setUserObj({ ...userObj, [name]: value });
   };
 

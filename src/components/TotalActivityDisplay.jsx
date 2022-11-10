@@ -16,9 +16,9 @@ function TotalActivityDisplay() {
   useEffect(() => setTotalActivities(teamsContextData), [teamsContextData]);
 
   // Parsing out every activity from each team and storing into arr
-  const totalActivitiesCards = totalActivities.reduce((totalArr, currTeam) => {
+  const totalActivitiesCards = teamsContextData?.teams?.reduce((totalArr, currTeam) => {
     console.log(currTeam, "currTeam");
-    for (const activity of currTeam.teamActivities) {
+    for (const activity of currTeam.activities) {
       totalArr.push(
         <ActivityCard
           key={currTeam.teamName + activity}
@@ -34,7 +34,7 @@ function TotalActivityDisplay() {
   return (
     <div className="total-activity-display flex-column flex-center container-card">
       <h1>Your Activities</h1>
-      {totalActivitiesCards.length ? (
+      {totalActivitiesCards?.length ? (
         totalActivitiesCards
       ) : (
         <h2>Make some plans!</h2>
