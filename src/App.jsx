@@ -19,12 +19,12 @@ function App() {
 
   // Goal: Pass setUserData to be invoked with fetched data anytime new data is created
   function syncStatetoDB(data) {
-    console.log("Updating state with DB change");
+    // console.log("Updating state with DB change");
     setUserData(data);
   }
 
   function syncUser(username) {
-    console.log("Succesful login, setting current user:", username);
+    // console.log("Succesful login, setting current user:", username);
     setCurrentUser(username);
   }
 
@@ -41,17 +41,17 @@ function App() {
     // })
     //   .catch((err) => console.error('Error in fetching teams list from user', err));
     const asyncFn = async () => {
-      console.log("Current user", currentUser);
+      // console.log("Current user", currentUser);
       const fetchedUserTeams = await fetch(`/db/user/${currentUser}`);
       const data = await fetchedUserTeams.json();
-      console.log(data, "what is data?"); // user data comes back as an array containing an object
+      // console.log(data, "what is data?"); // user data comes back as an array containing an object
 
       // Fetch team info for each team
       // Make an array of promises using the team_id's fetches
       // iterate over data.teams which is an array
       const fetchedTeams = [];
       // object.values
-      console.log("data: ", data);
+      // console.log("data: ", data);
       for (let team_id of Object.keys(data[0].teams)) {
         // console.log('team_id:', team_id);
         const teamInfo = await fetch(`/db/teaminfo/${team_id}`);
@@ -60,7 +60,7 @@ function App() {
       }
 
       const arrOfFetchedTeams = fetchedTeams.map((arrObj) => arrObj[0]);
-      console.log("arr of team objs", arrOfFetchedTeams);
+      // console.log("arr of team objs", arrOfFetchedTeams);
       setUserData(arrOfFetchedTeams);
     };
     asyncFn();
