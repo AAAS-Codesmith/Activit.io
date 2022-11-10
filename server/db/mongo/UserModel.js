@@ -9,7 +9,7 @@ const UserModel = new Schema({
   // ~25 million possible combinations
   user_id: { type: String, required: true },
   username: { type: String, required: true },
-  password: { type: String, required: true },
+  password: { type: String, required: false },
   // Will plan to generate a 10 digit alphanumeric string for the team_id
   // ~25 million possible combinations
   // Will reference Team Model from User Model via team_id

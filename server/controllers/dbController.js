@@ -209,6 +209,33 @@ dbController.createUser = async (req, res, next) => {
   });
 };
 
+// Signup/Sign in a user with Google
+dbController.googleUserAuth = async (req, res, next) => {
+  let user;
+  const { username } = req.params;
+
+  if (!username)
+    return next({
+      log: "Error encountered in dbController.googleUserAuth",
+      message: "Required params not found on request url.",
+    });
+  // check if user exists
+  user = await User.findOne({ username }).exec();
+  console.log(user, "user existing in db");
+
+  if (!user) {
+    const randomAlphanumeric =
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
+    user = await User.create({ user_id: randomAlphanumeric, username });
+    console.log(user, "user after saving");
+
+    res.locals.user_info = user;
+    res.locals.login_success = true;
+    return next();
+  }
+};
+
 // Create a new team
 dbController.createTeam = (req, res, next) => {
   console.log("\n");

@@ -28,39 +28,19 @@ function App() {
     setCurrentUser(username);
   }
 
-  // useEffect like componentDidMount - One time call
   useEffect(() => {
-    // Replace with fetch GET call to give us array of teams with associated activities
-    // Can use location.state to get username and pass to a fetch request
-    // fetch call to get user info, fetch team info for each team
-
-    // const fetchedUserTeams = await fetch(`/db/user/${location.state}`)
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log('fetched user teams: ', data);
-    // })
-    //   .catch((err) => console.error('Error in fetching teams list from user', err));
     const asyncFn = async () => {
-      // console.log("Current user", currentUser);
       const fetchedUserTeams = await fetch(`/db/user/${currentUser}`);
       const data = await fetchedUserTeams.json();
-      // console.log(data, "what is data?"); // user data comes back as an array containing an object
 
-      // Fetch team info for each team
-      // Make an array of promises using the team_id's fetches
-      // iterate over data.teams which is an array
       const fetchedTeams = [];
-      // object.values
-      // console.log("data: ", data);
       for (let team_id of Object.keys(data[0].teams)) {
-        // console.log('team_id:', team_id);
         const teamInfo = await fetch(`/db/teaminfo/${team_id}`);
         const teamData = await teamInfo.json();
         fetchedTeams.push(teamData);
       }
 
       const arrOfFetchedTeams = fetchedTeams.map((arrObj) => arrObj[0]);
-      // console.log("arr of team objs", arrOfFetchedTeams);
       setUserData(arrOfFetchedTeams);
     };
     asyncFn();

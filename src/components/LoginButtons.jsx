@@ -6,13 +6,6 @@ const LoginButtons = (props) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // console.log('boolResp from handleClick ', boolResp);
-    // if(boolResp === true) navigate('/home')
-    // else {
-    //   console.log('else block in handleClick');
-    //   alert('Login failed')
-    // }
-
     fetch("/db/login", {
       method: "POST",
       headers: {
