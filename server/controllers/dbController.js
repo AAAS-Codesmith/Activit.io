@@ -87,24 +87,16 @@ dbController.getTeamInfo = (req, res, next) => {
 
 // Verify user
 dbController.verifyUser = (req, res, next) => {
-  // console.log("\n");
-  // console.log("\n");
-  // Log to let us know we're in the controller
-  // console.log('\u001b[1;32m dbController.verifyUser called ');
-
-  // Pull out the username and password from the request body
-  const { username, password } = req.body;
-  // console.log("Received username: " + username + " and password: " + password);
-
+  // Pull out the email and password from the request body
+  const { email, password } = req.body;
+  if (!email || !password)
+    return next({
+      log: "Error encountered in dbController.verifyUser",
+      message: "Incomplete details.",
+    });
   // Find the user in the database
-  User.findOne({ username: username })
+  User.findOne({ email })
     .then((user) => {
-      // Log to let us know the user was found
-      // console.log(`\u001b[1:32m User found in database: `);
-      // console.group();
-      // console.log(user);
-      // console.groupEnd();
-
       // Compare the password to the hashed password
       bcrypt
         .compare(password, user.password)
@@ -112,101 +104,129 @@ dbController.verifyUser = (req, res, next) => {
           // If the passwords match
           if (result) {
             // Log to let us know the passwords match
-            // console.log(`\u001b[1;32m User verified!`);
-            res.locals.user_info = user;
-            res.locals.login_success = true;
+            //JS delete operator does not work on mongoose query result: you need to convert the Mongoose document object into an ordinary object first
+            const userObj = user.toObject();
+            // delete password from user info object to be sent to the frontend
+            delete userObj.password;
+            res.locals.user_info = userObj;
             return next();
           }
           // If the passwords don't match
           else {
             return next({
-              log: `Error in dbController.verifyUser: Passwords don't match`,
-              message: { err: "Error occurred in dbController.verifyUser." },
+              log: `Error in dbController.verifyUser`,
+              message: { err: "Email and password don't match." },
             });
           }
         })
         .catch((err) => {
           return next({
-            log: `Error in dbController.verifyUser: ${err}`,
-            message: { err: "Error occurred in dbController.verifyUser." },
+            log: `Error in dbController.verifyUser.`,
+            message: { err },
           });
         });
     })
     .catch((err) => {
       return next({
-        log: `Error in dbController.verifyUser: ${err}`,
-        message: { err: "Error occurred in dbController.verifyUser." },
+        log: `Error in dbController.verifyUser.`,
+        status: 500,
+        message: { err },
       });
     });
 };
 
 // Create a new User
 dbController.createUser = async (req, res, next) => {
-  console.log("\n");
-  // Log to let us know we're in the controller
-  console.log("\u001b[1;32m dbController.createUser called ");
+  // Destructure user info from the request body
+  const { username, email, password } = req.body;
+  if (!username || !email || !password)
+    return next({
+      log: "Error encountered in dbController.createUser",
+      message: "Incomplete details.",
+    });
 
-  // Pull out the user info from the request body
-  const { username, password } = req.body;
-  console.log("Received username: " + username + " and password: " + password);
-
-  // Ensure the username is unique
-  User.findOne({ username }, (err, user) => {
+  // Ensure the email is unique
+  User.findOne({ email }, (err, user) => {
     // Error handling
     if (err) {
       return next({
-        log: `Error in dbController.createUser: ${err}`,
-        message: { err: "Error occurred in dbController.createUser." },
+        log: `Error in dbController.createUser.`,
+        message: { err },
       });
     }
     if (user) {
       // Log to let us know the user was found
       return next({
-        log: `Error in dbController.createUser: Username already exists`,
-        message: { err: "Error occurred in dbController.createUser." },
+        log: `Error in dbController.createUser.`,
+        message: { err: "Email already exists." },
       });
-      throw new Error("Username already exists");
     } else {
-      // Log to let us know the user was not found
-      console.log(`\u001b[1:32m Username does not exist `);
       // Hash the password
       const hashedPassword = bcrypt.hashSync(password, saltRounds);
-      console.log(hashedPassword);
-      console.log(typeof hashedPassword);
-
       // Generate a random userID for the new user
       const randomAlphanumeric =
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15);
 
       // Create a new user object
-      console.log("creating user");
       User.create({
         user_id: randomAlphanumeric,
         username,
+        email,
         password: hashedPassword,
         // teams: { team: req.params.team_id },
       })
         .then((user) => {
-          // Log to let us know the user was saved
-          console.log("\u001b[1:32m User saved to database: ");
-          console.group();
-          console.log(user);
-          console.groupEnd();
-          res.locals.user_info = user;
-          res.locals.register_response = true;
+          //JS delete operator does not work on mongoose query result: you need to convert the Mongoose document object into an ordinary object first
+          const userObj = user.toObject();
+          // delete password from user info object to be sent to the frontend
+          delete userObj.password;
+          res.locals.user_info = userObj;
           // Move to the next middleware
           return next();
         })
         .catch((err) => {
           // Error handling
           return next({
-            log: `Error in dbController.createUser: ${err}`,
-            message: { err: "Error occurred in dbController.createUser." },
+            log: `Error in dbController.createUser`,
+            status: 500,
+            message: { err },
           });
         });
     }
   });
+};
+
+// Signup/Sign in a user with Google
+dbController.googleUserAuth = async (req, res, next) => {
+  let user;
+  const { username, email, googleId } = req.body;
+  if (!username || !email || !googleId)
+    return next({
+      log: "Error encountered in dbController.googleUserAuth",
+      message: "Incomplete details.",
+    });
+  // check if user exists
+  user = await User.findOne({ googleId }).exec();
+
+  if (!user) {
+    // randome id generation for user
+    const randomAlphanumeric =
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
+    user = await User.create({
+      user_id: randomAlphanumeric,
+      googleId,
+      username,
+      email,
+    });
+  }
+  //JS delete operator does not work on mongoose query result: you need to convert the Mongoose document object into an ordinary object first
+  const userObj = user.toObject();
+  // delete password from user info object to be sent to the frontend
+  delete userObj.password;
+  res.locals.user_info = userObj;
+  return next();
 };
 
 // Create a new team
