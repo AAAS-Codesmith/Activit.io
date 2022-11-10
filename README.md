@@ -19,6 +19,14 @@ Steven Geist
 
 [API Docs:] (https://www.boredapi.com/documentation)
 
+## Iteration Group:
+
+git commit -m "your commit message here
+<hit enter 3 times>
+Co-authored-by: Ruqayaah Sabitu <49168086+ruqayaahh@users.noreply.github.com>
+Co-authored-by: Tiffany Chau <102318022+tiffanynchau@users.noreply.github.com>
+Co-authored-by: Erik Stynchula <110676583+EStynch@users.noreply.github.com>
+Co-authored-by: Elise McConnell <112969060+enmcco@users.noreply.github.com>"
 
 ## Motivations
 
