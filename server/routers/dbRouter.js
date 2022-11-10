@@ -23,26 +23,25 @@ router.get("/teaminfo/:team_id", dbController.getTeamInfo, (req, res) => {
 
 // Route to verify user on login
 router.post("/login", dbController.verifyUser, (req, res) => {
-  // console.log(' Received response from dbController.verifyUser in dbRouter.js ');
-  // console.log('res.locals.response: ',res.locals.login_response)
-  return res.status(200).json({ login_success: true });
+  return res.status(200).json({
+    user_info: res.locals.user_info,
+    login_success: true,
+  });
 });
 
 // Route to sigin with google
-router.post(
-  "/google-login/:username",
-  dbController.googleUserAuth,
-  (req, res) => {
-    // console.log('res.locals.user_info: ',res.locals.login_response)
-    return res
-      .status(200)
-      .json({ user: res.locals.user_info, login_success: true });
-  }
-);
+router.post("/google-login", dbController.googleUserAuth, (req, res) => {
+  return res
+    .status(200)
+    .json({ user_info: res.locals.user_info, login_success: true });
+});
 
 // Route to add a new user to the database
 router.post("/register", dbController.createUser, (req, res) => {
-  return res.status(200).json(res.locals.register_response);
+  return res.status(200).json({
+    user_info: res.locals.user_info,
+    register_response: true,
+  });
 });
 
 // Route to add a new team to the database

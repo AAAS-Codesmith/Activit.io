@@ -23,35 +23,30 @@ function App() {
     setUserData(data);
   }
 
-  function syncUser(username) {
-    // console.log("Succesful login, setting current user:", username);
-    setCurrentUser(username);
-  }
+  // useEffect(() => {
+  //   const asyncFn = async () => {
+  //     const fetchedUserTeams = await fetch(`/db/user/${currentUser}`);
+  //     const data = await fetchedUserTeams.json();
 
-  useEffect(() => {
-    const asyncFn = async () => {
-      const fetchedUserTeams = await fetch(`/db/user/${currentUser}`);
-      const data = await fetchedUserTeams.json();
+  //     const fetchedTeams = [];
+  //     for (let team_id of Object.keys(data[0].teams)) {
+  //       const teamInfo = await fetch(`/db/teaminfo/${team_id}`);
+  //       const teamData = await teamInfo.json();
+  //       fetchedTeams.push(teamData);
+  //     }
 
-      const fetchedTeams = [];
-      for (let team_id of Object.keys(data[0].teams)) {
-        const teamInfo = await fetch(`/db/teaminfo/${team_id}`);
-        const teamData = await teamInfo.json();
-        fetchedTeams.push(teamData);
-      }
-
-      const arrOfFetchedTeams = fetchedTeams.map((arrObj) => arrObj[0]);
-      setUserData(arrOfFetchedTeams);
-    };
-    asyncFn();
-  }, [currentUser]);
+  //     const arrOfFetchedTeams = fetchedTeams.map((arrObj) => arrObj[0]);
+  //     setUserData(arrOfFetchedTeams);
+  //   };
+  //   asyncFn();
+  // }, [currentUser]);
 
   return (
     <TeamsContext.Provider value={userData}>
       <div className="main-app flex-column flex-center">
         <HomeButton />
         <Routes>
-          <Route path="/" element={<LoginPage setUser={syncUser} />} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<Home />} />
           <Route
             path="/createTeam"

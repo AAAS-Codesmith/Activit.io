@@ -21,18 +21,15 @@ Before/after installing the above packages:
  * add GoogleLogin button from react-google-login package. Read here for attributes/props the button can have https://www.npmjs.com/package/react-google-login
  */
 import React, { useEffect } from "react";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
-// import dotenv from "dotenv";
-// dotenv.config({
-//   path: path.resolve(__dirname, "../.env"),
-// });
-// const clientId = process.env.REACT_APP_CLIENTID;
+import { useNavigate } from "react-router-dom";
 
 const clientId =
   "1083388506222-p935iqdq548suhtmi3fom4u7vffo6hlj.apps.googleusercontent.com";
 
 export default function GoogleAuth() {
+  const navigate = useNavigate();
   useEffect(() => {
     const initializeClient = () => {
       gapi.client.init({
@@ -40,39 +37,45 @@ export default function GoogleAuth() {
         scope: "",
       });
     };
-    console.log(clientId, "clientId");
-    // if (clientId)
     gapi.load("client:auth2", initializeClient);
   }, [clientId]);
 
   const onSuccess = (res) => {
-    console.log("Success");
-    console.log(res, "res");
-    console.log(res.Ca, "res.Ca");
-    '/google-login/:username'
-  };
-  const onFailure = () => {
-    console.log("Failed");
-  };
+    // destructure email, googleId and user's firstname (givenName) from profile object returned by Google
+    const { email, givenName, googleId } = res.profileObj;
 
-  const logout = () => {
-    console.log("loggedout");
+    fetch("/db/google-login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: givenName.toLowerCase(),
+        email,
+        googleId,
+      }),
+    })
+      .then((res) => {
+        if (res.ok && res.status === 200) return res.json();
+        throw new Error("Some other thing went wrong.");
+      })
+      .then((data) => {
+        console.log(data, "google signup/in data");
+        return navigate("/home", { state: data.user_info });
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+      });
   };
   return (
     <>
       <GoogleLogin
         clientId={clientId}
-        buttonText="Login with Google"
+        buttonText="Signup/Login with Google"
         onSuccess={onSuccess}
         onFailure={onFailure}
         cookiePolicy={"single_host_origin"}
         isSignedIn={false} //will call onSuccess callback on load to keep the user signed in.
-      />
-
-      <GoogleLogout
-        clientId={clientId}
-        buttonText="Logout"
-        onLogoutSuccess={logout}
       />
     </>
   );
