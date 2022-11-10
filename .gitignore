@@ -1,2 +1,4 @@
 node_modules
 process.env
+/src/.env
+/src/credentials.json
