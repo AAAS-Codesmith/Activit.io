@@ -7,13 +7,14 @@ function Home() {
   const location = useLocation();
   console.log(location.state, 'userData currently in state');
   return (
-    <div className='flex-column flex-center home '>
-      <h1>Who's down to hang?</h1>
+    <div className="flex-column flex-center home ">
+      <h1>Welcome to Activ-8</h1>
       <TotalTeamDisplay />
-      <h1>Choose an activity!</h1>
+      <hr></hr>
+      <h1>Generate A Random Activity!</h1>
       <TotalActivityDisplay />
     </div>
-  )
+  );
 }
 
 export default Home;

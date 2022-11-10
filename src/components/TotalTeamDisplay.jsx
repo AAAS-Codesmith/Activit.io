@@ -31,15 +31,16 @@ function TotalTeamDisplay() {
   });
 
   return (
-    <div className="total-team-display flex-column flex-center container-card">
-      <h1>Total Team Display</h1>
-      <Link to="/createTeam">
-        <button className="button">Create Team</button>
-      </Link>
+    // previous className: "total-team-display flex-column flex-center container-card"
+    <div className="total-team-display">
+      <h1>Your Teams</h1>
       <div className="teams-scroll-container">
         <div className="teams-scroll">
           {teamCardDisplay.length ? teamCardDisplay : <h2>Make a squad!</h2>}
         </div>
+        <Link to="/createTeam">
+          <button className="button-create-team">Create New Team</button>
+        </Link>
       </div>
     </div>
   );

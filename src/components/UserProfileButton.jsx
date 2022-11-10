@@ -1,24 +1,24 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-function HomeButton() {
+function UserInfoButton() {
   const location = useLocation();
   if (location.pathname === "/") return null;
   else
     return (
-      <div className="home-button">
-        <Link to="/home" className="home-button-link">
+      <div className="user-button">
+        <Link to="/userprofile" className="user-button-link">
           <button
-            className="home-button"
+            className="user-button"
             onClick={() => {
-              console.log("Clicking home button");
+              console.log("Clicking user-button button");
             }}
           >
-            Home
+            Profile
           </button>
         </Link>
       </div>
     );
 }
 
-export default HomeButton;
+export default UserInfoButton;

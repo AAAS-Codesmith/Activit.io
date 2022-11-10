@@ -1,14 +1,19 @@
-import { Routes, Route, useLocation } from "react-router-dom";
-import React, { useEffect, createContext } from "react";
+import { Routes, Route, useLocation, Link } from "react-router-dom";
+import React, { useEffect, createContext, useContext } from "react";
 
 import LoginPage from "./containers/LoginPage.jsx";
 import HomeButton from "./components/HomeButton.jsx";
+import UserProfile from "./containers/UserProfile.jsx";
+import UserProfileButton from "./components/UserProfileButton.jsx";
 import Home from "./containers/Home.jsx";
 import CreateTeam from "./containers/CreateTeam.jsx";
 import TeamInfo from "./containers/TeamInfo.jsx";
 import ActivityInfo from "./containers/ActivityInfo.jsx";
+import NavBar from "./components/NavBar.jsx";
+import Footer from "./components/Footer.jsx";
 
 export const TeamsContext = React.createContext({});
+export const UserProfileContext = React.createContext({});
 
 function App() {
   const location = useLocation();
@@ -43,8 +48,12 @@ function App() {
 
   return (
     <TeamsContext.Provider value={userData}>
+      <div>
+        <NavBar />
+      </div>
       <div className="main-app flex-column flex-center">
-        <HomeButton />
+        {/* <HomeButton />
+        <UserProfileButton /> */}
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<Home />} />
@@ -59,6 +68,15 @@ function App() {
           />
         </Routes>
       </div>
+      <div>
+        {/* added to try and have our user info button show and work on the home page */}
+        <UserProfileContext.Provider value={userData}>
+          <Routes>
+            <Route path="/userprofile" element={<UserProfile />} />
+          </Routes>
+        </UserProfileContext.Provider>
+      </div>
+      <Footer />
     </TeamsContext.Provider>
   );
 }

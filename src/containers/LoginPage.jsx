@@ -31,6 +31,7 @@ const LoginPage = () => {
     clearFields();
     setAccountCreation(!accountCreation);
   }
+
   // Registration Body
   async function registerAccount() {
     clearFields();
