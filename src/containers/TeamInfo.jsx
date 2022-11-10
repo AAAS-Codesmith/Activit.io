@@ -11,6 +11,9 @@ function TeamInfo(props) {
   const currTeam = totalTeamsArr.filter(obj => obj.teamName === location.state.teamName)
   // Initialize state to currTeams data (Obj)
   // *currTeam is a single object inside of an array which is why the spread
+
+  // SET LIST OPTIONS STATE
+  const [endOfList, setListEnd] = useState(false);
   // SET TEAM STATE
   const [teamInfo, setUpdateTeam] = React.useState(...currTeam);
   
@@ -32,7 +35,8 @@ function TeamInfo(props) {
                 return getActivity(counter + 1);
               }
               // after 4 failed attempts to get new activity, stop trying
-              else return announceEndOfActivities();
+              else return setListEnd(true);
+              //return announceEndOfActivities();
             }
           }
           return updateTeamData(activityData);
@@ -75,6 +79,7 @@ function TeamInfo(props) {
 
   const announceEndOfActivities = () => {
     console.log('END OF ACTIVITIES!');
+
   }
 
   const deleteTeam = () => {
@@ -113,7 +118,10 @@ function TeamInfo(props) {
         onClick={() => deleteTeam()}>
         Delete Team
       </button>
-      <button
+      <>
+      {endOfList
+        ? <span>No More Activities</span>
+        : <button
         className='button align-self-end'
         onClick={() => {
           console.log('Updating activities')
@@ -121,6 +129,8 @@ function TeamInfo(props) {
         }}>
         Add Activity
       </button>
+      }
+      </>
       </div>
     </div>
   )
